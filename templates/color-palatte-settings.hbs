@@ -1,0 +1,23 @@
+<form>
+  <ul class="token-color-marker-palatte-settings flexcol">
+    {{#if colors}}
+    <li class="flexrow header">
+      <div class="name-col">Name</div>
+      <div>Hex</div>
+      <div>Color Picker</div>
+    </li>
+    {{/if}}
+    {{#each colors}}
+    <li class="flexrow" data-color-id="{{id}}">
+      <input type="text" name="{{id}}.label" value="{{label}}" class="name-col"/>
+      <input type="text" name="{{id}}.hex" value="{{hex}}" />
+      <input type="color" name="{{id}}.hex" value="{{hex}}" />
+      <button type="button" title="{{localize "token-color-marker.color-manager-menu.delete-color"}}" data-action="delete" class="flex0 token-color-marker-color-delete-icon-button">
+        <i class="fas fa-trash"></i>
+      </button>
+    </li>
+    {{/each}}
+  </ul>
+
+  <button type="button" data-action="create"><i class="fas fa-plus"></i> {{localize "token-color-marker.color-manager-menu.add-color"}}</button>
+</form>

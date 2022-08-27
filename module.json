@@ -1,0 +1,34 @@
+{
+    "id": "token-color-marker",
+    "name": "token-color-marker",
+    "title": "Token Color Marker",
+    "description": "A simple module to add a color marker to identify multiple tokens with the same image",
+    "authors": [
+      {
+        "name": "Gundancer"
+      }
+    ],
+    "version": "1.0.0",
+    "compatibility": {
+      "verified": "9"
+    },
+    "languages": [
+      {
+        "lang": "en",
+        "name": "English",
+        "path": "languages/en.json"
+      }
+    ],
+    "styles": [
+      "styles/token-color-marker.css"
+    ],
+    "scripts": [],
+    "esmodules": [
+      "token-color-marker.mjs"
+    ],
+    "manifest": "https://github.com/Gundancer/foundryvtt-token-color-marker/releases/latest/download/module.json",
+    "download": "https://github.com/Gundancer/foundryvtt-token-color-marker/releases/download/v1.0.0/module.zip",
+    "readme": "https://raw.githubusercontent.com/Gundancer/foundryvtt-token-color-marker/blob/main/README.md",
+    "url": "https://github.com/Gundancer/foundryvtt-token-color-marker",
+    "compatibleCoreVersion": "9"
+  }
