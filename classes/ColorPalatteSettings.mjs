@@ -2,6 +2,7 @@ import { IconCreator } from "./IconCreator.mjs";
 import { Settings } from "./Settings.mjs";
 import { MODULENAME } from "./TokenColorMarker.mjs";
 
+// the form to customize the color markers in module settings
 export class ColorPalatteSettings extends FormApplication {
     static get defaultOptions() {
       const defaults = super.defaultOptions;
@@ -21,10 +22,12 @@ export class ColorPalatteSettings extends FormApplication {
       return mergedOptions;
     }
   
+    // het the color list in the settings
     static getColors() {
       return game.settings.get(MODULENAME, Settings.COLORS);
     }
 
+    // create a color and add it tothe settings color list
     static async createColor() {
         // generate a random id for this new Color and populate
         let hexValue = this.getRandomColor();
@@ -41,17 +44,16 @@ export class ColorPalatteSettings extends FormApplication {
         return game.settings.set(MODULENAME, Settings.COLORS, colors);
     }
 
-    static async updateColors(updateData) {
-      return await game.settings.set(MODULENAME, Settings.COLORS, updateData);
-    }
-
     static async updateColor(colorId, field, value) {
+        // get the color list 
         let colors = this.getColors();
-
+        // find the color to update
         let relevantColor = colors.find(x => x.id === colorId)
         
+        // update the color
         relevantColor[field] = value;
 
+        // if the hex value is being updated, generate an icon with the new color
         if(field === 'hex') {
           relevantColor['iconDataUrl'] = IconCreator.getIcon(value);
         }
@@ -61,8 +63,10 @@ export class ColorPalatteSettings extends FormApplication {
     }
     
     static deleteColor(colorId) {
+        // get the lis of colors
         let colors = this.getColors();
 
+        // remove the color selected
         colors = colors.filter(x => {
           return x.id != colorId;
         })
@@ -71,6 +75,7 @@ export class ColorPalatteSettings extends FormApplication {
         return game.settings.set(MODULENAME, Settings.COLORS, colors);
     }
 
+    // handles the create and delete actions
     async _handleButtonClick(event) {
       const clickedElement = $(event.currentTarget);
       const action = clickedElement.data().action;
@@ -108,21 +113,25 @@ export class ColorPalatteSettings extends FormApplication {
       html.on('click', "[data-action]", this._handleButtonClick.bind(this));
     }
   
+    // gets the color list to display on the form
     getData() {
       return {
         colors: ColorPalatteSettings.getColors()
       }
     }
   
+    // handles the update action
     async _onChangeInput(event) {
   
       let inputName = event.currentTarget.name.split('.');
 
+      // update the color marker
       await ColorPalatteSettings.updateColor(inputName[0], inputName[1], event.currentTarget.value);
 
       this.render();
     }
 
+    // generates a random color for the new color marker.
     static getRandomColor() {
       var letters = '0123456789ABCDEF';
       var color = '#';

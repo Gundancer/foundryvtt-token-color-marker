@@ -1,6 +1,8 @@
 import { Settings } from './Settings.mjs';
 import { TokenColorMarker, MODULENAME } from './TokenColorMarker.mjs';
 
+// A class that contains the main functionality for the module with a few 
+// specific changes to work for the PF2e system
 export class TokenColorMarkerPF2e extends TokenColorMarker {
 
     static addTokenColorMarkerModule() {

@@ -13,6 +13,7 @@ const DEFAULT_COLORS = [
   "#000000",
 ]
 
+// A class used to register the module settings
 export class Settings {
 
     static getDefaultColorSettings() {
@@ -32,6 +33,7 @@ export class Settings {
 
     static registerSettings() {
     
+      // register the setting to turn off the token color marker button
       game.settings.register(MODULENAME, this.ENABLE_BUTTON_SETTING, {
         name: `${MODULENAME}.settings.${this.ENABLE_BUTTON_SETTING}.Name`,
         default: true,
@@ -42,6 +44,7 @@ export class Settings {
         onChange: () => ui.players.render()
       });
 
+      // register the setting to enable the token color marker button to only be seen by the GM
       game.settings.register(MODULENAME, this.ENABLE_BUTTON_GM_ONLY_SETTING, {
         name: `${MODULENAME}.settings.${this.ENABLE_BUTTON_GM_ONLY_SETTING}.Name`,
         default: false,
@@ -62,6 +65,7 @@ export class Settings {
         hint: `${MODULENAME}.settings.color-manager-menu.Hint`,
       });
 
+      // register the colors settiong to allow for color customization 
       game.settings.register(MODULENAME, this.COLORS, {
         default: this.getDefaultColorSettings(),
         type: Array,

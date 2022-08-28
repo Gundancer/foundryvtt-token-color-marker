@@ -6,6 +6,7 @@ const FLAGS = {
     COLORMARKERCLASS: 'colorMarkerClass',
 }
 
+// A class that contains the main functionality for the module
 export class TokenColorMarker {
     static addTokenColorMarkerModule() {
         Hooks.on('renderTokenHUD', (app, html, data) => { 
@@ -64,15 +65,18 @@ export class TokenColorMarker {
 
         let markers = "";
 
+        // get the list of colors from the settings
         let colors = game.settings.get(MODULENAME, Settings.COLORS);
 
+        // create a color marker for each color
         colors.forEach(color => {
             let activeColor = tokenHUD.object.document.getFlag(`${MODULENAME}`, color.id);
             markers = markers.concat(`<img class="${MODULENAME} ${activeColor ?? ''}" data-color-id="${color.id}" id="${MODULENAME}-${color.id}" src="${color.iconDataUrl}" title="${color.label}">`);
         });
 
+        // This will check if a token has a color marker still on it that has been deleted. If it does, a trash icon
+        // will be visible on the palette to remove them.
         let showTrash = false;
-
         let colorFlags = tokenHUD.object.data.flags[MODULENAME];
         if(colorFlags) {
             Object.entries(colorFlags)?.forEach(colorFlag => {
@@ -173,15 +177,18 @@ export class TokenColorMarker {
         await tokenHUD.object.toggleEffect(effectObject);
     }
 
+
     static async clickRemoveDeletedColorMarkers(event, app, data)
     {
         event.preventDefault();
         event.stopPropagation();
 
+        // get the colors from settings
         let colors = game.settings.get(MODULENAME, Settings.COLORS);
+        // get the color marker flags on the token
         let colorFlags = app.object.data.flags[MODULENAME];
-        let colorFlagEntries = Object.entries(colorFlags);
 
+        let colorFlagEntries = Object.entries(colorFlags);
         // find any deleted color markers on a token and remove them.
         for (const colorFlagEntry of colorFlagEntries) {
             if(!colors.find(x => x.id === colorFlagEntry[0])) {
