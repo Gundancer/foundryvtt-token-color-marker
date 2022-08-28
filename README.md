@@ -26,6 +26,6 @@ Token Color Marker comes with some module settings. The Token Color Marker butto
 
 ![Token Color Marker](README-img/ModuleSettings.jpg)
 
-The "My Color Settings" button in module settings will open the color customization window. The name of a color marker can be modified here along with the hex value. The color picker column shows the color and opens a color picker. The "Add Color" button adds a new color marker with a random color. The image below is an example of adding "Pink" to the color marker palette.
+The "My Color Settings" button in module settings will open the color customization window. The name of a color marker can be modified here along with the hex value. The color picker column shows the color and opens a color picker. The trash icon is used to delete. The "Add Color" button adds a new color marker with a random color. The image below is an example of adding "Pink" to the color marker palette.
 
 ![Token Color Marker](README-img/CustomColors.jpg)
