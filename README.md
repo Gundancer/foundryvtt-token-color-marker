@@ -1,7 +1,17 @@
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/gundancer)
+
 # Token Color Marker
 This is a module for Foundry Virtual Tabletop to add a color marker to a token. This allows for easy identification if a token has the same image.
 
-This module works for the "DnD5e", "Pathfinder 1", and "Pathfinder Second Edition" systems. It also works for the "worldbuilding" system so it may work for other system not mentioned here.
+This module works for the "DnD5e", "Pathfinder 1", and "Pathfinder Second Edition" systems. It also works for the "worldbuilding" system so it may work for other systems not mentioned here.
+
+## Installation
+
+Module JSON:
+
+```
+https://github.com/Gundancer/foundryvtt-token-color-marker/releases/latest/download/module.json
+```
 
 ## Usage
 Token Color Marker works in a similar  way to assigning a status effect. Open the color marker palette and select a color as shown bellow.
