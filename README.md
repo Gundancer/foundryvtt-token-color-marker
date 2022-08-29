@@ -1,3 +1,5 @@
+[![Github All Releases](https://img.shields.io/github/downloads/Gundancer/foundryvtt-token-color-marker/total.svg)]()
+
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/gundancer)
 
 # Token Color Marker
