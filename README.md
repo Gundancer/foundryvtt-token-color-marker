@@ -1,7 +1,7 @@
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/gundancer)
 
 # Token Color Marker
-This Foundry Virtual Tabletop module allows users to add color markers to tokens for easy identification.
+This Foundry Virtual Tabletop module Adds a token HUD button to place a color marker for easy identification.
 
 This module works for the "DnD5e", "Pathfinder", and "Pathfinder Second Edition" systems. It also works for the "worldbuilding" system so it may work for other systems not mentioned here.
 
