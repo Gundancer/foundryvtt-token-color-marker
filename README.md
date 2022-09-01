@@ -1,9 +1,12 @@
+[![v1.0.1 download count](https://img.shields.io/github/downloads/Gundancer/foundryvtt-token-color-marker/latest/module.zip)]()
+![Forge Installs](https://img.shields.io/badge/dynamic/json?label=Forge%20Installs&query=package.installs&suffix=%25&url=https%3A%2F%2Fforge-vtt.com%2Fapi%2Fbazaar%2Fpackage%2Ftoken-color-marker&colorB=4aa94a)
+
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/gundancer)
 
 # Token Color Marker
-This Foundry Virtual Tabletop module allows users to add color markers to tokens for easy identification.
+This Foundry Virtual Tabletop module Adds a token HUD button to place a color marker for easy identification.
 
-This module works for the "DnD5e", "Pathfinder", and "Pathfinder Second Edition" systems. It also works for the "worldbuilding" system so it may also work for other systems not mentioned here.
+This module works for the "DnD5e", "Pathfinder", and "Pathfinder Second Edition" systems. It also works for the "worldbuilding" system so it may work for other systems not mentioned here.
 
 ## Installation
 
