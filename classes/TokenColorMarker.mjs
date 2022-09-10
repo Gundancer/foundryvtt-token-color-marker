@@ -77,7 +77,7 @@ export class TokenColorMarker {
         // This will check if a token has a color marker still on it that has been deleted. If it does, a trash icon
         // will be visible on the palette to remove them.
         let showTrash = false;
-        let colorFlags = tokenHUD.object.data.flags[MODULENAME];
+        let colorFlags = tokenHUD.object.document.flags[MODULENAME];
         if(colorFlags) {
             Object.entries(colorFlags)?.forEach(colorFlag => {
                 if(colorFlag[0] !== FLAGS.COLORMARKERCLASS && !colors.find(x => x.id === colorFlag[0]))
