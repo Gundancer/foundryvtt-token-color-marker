@@ -1,5 +1,4 @@
 import { ColorPalatteSettings } from './ColorPalatteSettings.mjs';
-import { IconCreator } from './IconCreator.mjs';
 import { MODULENAME } from './TokenColorMarker.mjs';
 
 const DEFAULT_COLORS = [
@@ -21,7 +20,7 @@ export class Settings {
 
       DEFAULT_COLORS.forEach(defaultColor => {
         let label = game.i18n.localize(`${MODULENAME}.default-setting-colors.${defaultColor}`)
-        defaultColors.push( { hex: `${defaultColor}`, label: label, id: foundry.utils.randomID(16), iconDataUrl: `${IconCreator.getIcon(defaultColor)}` })
+        defaultColors.push( { hex: `${defaultColor}`, label: label, id: foundry.utils.randomID(16) })
       });
 
       return defaultColors;

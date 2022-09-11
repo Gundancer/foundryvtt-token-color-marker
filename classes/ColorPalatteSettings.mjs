@@ -1,4 +1,3 @@
-import { IconCreator } from "./IconCreator.mjs";
 import { Settings } from "./Settings.mjs";
 import { MODULENAME } from "./TokenColorMarker.mjs";
 
@@ -34,8 +33,7 @@ export class ColorPalatteSettings extends FormApplication {
         const newColor = {
             hex: hexValue,
             label: game.i18n.localize(`${MODULENAME}.color-manager-menu.new-color-label`),
-            id: foundry.utils.randomID(16),
-            iconDataUrl: IconCreator.getIcon(hexValue)
+            id: foundry.utils.randomID(16)
         }
     
         let colors = this.getColors().concat(newColor);
@@ -52,11 +50,6 @@ export class ColorPalatteSettings extends FormApplication {
         
         // update the color
         relevantColor[field] = value;
-
-        // if the hex value is being updated, generate an icon with the new color
-        if(field === 'hex') {
-          relevantColor['iconDataUrl'] = IconCreator.getIcon(value);
-        }
 
         // update the database with the updated Color list
         return await game.settings.set(MODULENAME, Settings.COLORS, colors);

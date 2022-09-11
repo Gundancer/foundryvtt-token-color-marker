@@ -35,6 +35,11 @@
 
 .token-color-marker {
     margin: 0 !important;
+    opacity: 0.7;
+}
+
+.token-color-marker:hover {
+    opacity: 1 !important;
 }
 
 .token-color-marker.active {

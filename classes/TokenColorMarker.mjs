@@ -2,6 +2,9 @@ import { Settings } from "./Settings.mjs";
 
 export const MODULENAME = "token-color-marker";
 
+const RAINBOWMARKER = `modules/${MODULENAME}/icons/rainbow.webp`
+const WHITEMARKER = `modules/${MODULENAME}/icons/white-marker.webp`;
+
 const FLAGS = {
     COLORMARKERCLASS: 'colorMarkerClass',
 }
@@ -71,7 +74,11 @@ export class TokenColorMarker {
         // create a color marker for each color
         colors.forEach(color => {
             let activeColor = tokenHUD.object.document.getFlag(`${MODULENAME}`, color.id);
-            markers = markers.concat(`<img class="${MODULENAME} ${activeColor ?? ''}" data-color-id="${color.id}" id="${MODULENAME}-${color.id}" src="${color.iconDataUrl}" title="${color.label}">`);
+            markers = markers.concat(
+                `<div class="${MODULENAME} ${activeColor ?? ''}" data-color-id="${color.id}" id="${MODULENAME}-${color.id}" title="${color.label}">
+                    <i class="fa-solid fa-square-small" style="color: ${color.hex}; font-size: 25px; display: block;"></i>
+                 </div>`
+            );
         });
 
         // This will check if a token has a color marker still on it that has been deleted. If it does, a trash icon
@@ -99,7 +106,7 @@ export class TokenColorMarker {
         // insert a button at the top of this element
         rightButtonColumn.prepend(
             `<div class="control-icon ${active ?? ''}" data-action="${MODULENAME}">
-                <img src="modules/${MODULENAME}/icons/rainbow.webp" width="36" height="36" title="${buttonTooltip}">
+                <img src="${RAINBOWMARKER}" width="36" height="36" title="${buttonTooltip}">
                 <div class="${MODULENAME}-palette ${active ?? ''}">
                     ${markers}
                     <i id="remove-deleted-colors" class="fas fa-trash ${showTrash ? 'active' : ''}" title="${trashTooltip}"></i>
@@ -170,7 +177,8 @@ export class TokenColorMarker {
             // if the color has been deleted, set the label to the color id
             label: (color ? color.label : colorId), 
             // if the color has been deleted, set the icon to the default rainbow image
-            icon: (color ? `${color.iconDataUrl}` : `modules/${MODULENAME}/icons/rainbow.webp`) ,
+            icon: `${WHITEMARKER}`,
+            tint: (color ? color.hex : "#ffffff")
         }
 
         // toggle the marker effect
