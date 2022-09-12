@@ -73,9 +73,10 @@ export class TokenColorMarker {
 
         // create a color marker for each color
         colors.forEach(color => {
-            let activeColor = tokenHUD.object.document.getFlag(`${MODULENAME}`, color.id);
+            // Check if the effects is already on the token
+            let activeColor = tokenHUD.object.document.actor.effects.find(e => e.getFlag("core", "statusId") === color.id);
             markers = markers.concat(
-                `<div class="${MODULENAME} ${activeColor ?? ''}" data-color-id="${color.id}" id="${MODULENAME}-${color.id}" title="${color.label}">
+                `<div class="${MODULENAME} ${activeColor ? 'active' : ''}" data-color-id="${color.id}" id="${MODULENAME}-${color.id}" title="${color.label}">
                     <i class="fa-solid fa-square-small" style="color: ${color.hex}; font-size: 25px; display: block;"></i>
                  </div>`
             );
@@ -151,22 +152,10 @@ export class TokenColorMarker {
         // This is a one time use flag to keep the token color marker "control-icon" active
         await tokenHUD.object.document.setFlag(`${MODULENAME}`, FLAGS.COLORMARKERCLASS, 'active');
 
-        let isActive;
-
-        // toggle flag to store what markers are set on the token. 
-        if(tokenHUD.object.document.getFlag(`${MODULENAME}`, colorId)) {
-            await tokenHUD.object.document.unsetFlag(`${MODULENAME}`, colorId);
-            isActive = false;
-        }
-        else {
-            await tokenHUD.object.document.setFlag(`${MODULENAME}`, colorId, 'active');
-            isActive = true;
-        }
-
-        this.toggleMarkerToToken(tokenHUD, colorId, data, isActive);
+        this.toggleMarkerToToken(tokenHUD, colorId, data);
     }
 
-    static async toggleMarkerToToken(tokenHUD, colorId, data, isActive) {
+    static async toggleMarkerToToken(tokenHUD, colorId, data) {
         
         let colors = game.settings.get(MODULENAME, Settings.COLORS);
         let color = colors.find(x => x.id === colorId);
