@@ -28,10 +28,9 @@ export class TokenColorMarkerPF2e extends TokenColorMarker {
             }
         }
 
-        // Only redraw if needed. this also prevents an infinate loop.
+        // Only redraw if needed.
         if(needsRedraw){
-            //Note: I would rather call drawEffects(), but it changes the order and is poor UX.
-            token.draw();
+            token.drawEffects();
         }
     }
 }
