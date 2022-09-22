@@ -60,6 +60,11 @@ export class TokenColorMarker {
             });
 
         });
+
+        Hooks.on('renderCombatTracker', (tracker, html, data) => { 
+            // update the color marker icons in the combat tracker
+            this.updateCombatTrackerIcons(html);
+        });
     }
 
     static addTokenColorMarkerUI(tokenHUD, html, data) {
@@ -77,7 +82,7 @@ export class TokenColorMarker {
             let activeColor = tokenHUD.object.document.actor.effects.find(e => e.getFlag("core", "statusId") === color.id);
             markers = markers.concat(
                 `<div class="${MODULENAME} ${activeColor ? 'active' : ''}" data-color-id="${color.id}" id="${MODULENAME}-${color.id}" title="${color.label}">
-                    <i class="fa-solid fa-square-small" style="color: ${color.hex}; font-size: 25px; display: block;"></i>
+                    <i class="fa-solid fa-square-small ${MODULENAME}-icon" style="color: ${color.hex};"></i>
                  </div>`
             );
         });
@@ -160,20 +165,21 @@ export class TokenColorMarker {
         let colors = game.settings.get(MODULENAME, Settings.COLORS);
         let color = colors.find(x => x.id === colorId);
 
+        let hex = (color ? color.hex : "#ffffff");
+
         // the marker effect to be added to the token
         let effectObject = {
             id: colorId,
             // if the color has been deleted, set the label to the color id
             label: (color ? color.label : colorId), 
             // if the color has been deleted, set the icon to the default rainbow image
-            icon: `${WHITEMARKER}`,
+            icon: `${WHITEMARKER}?hex=${hex}`,
             tint: (color ? color.hex : "#ffffff")
         }
 
         // toggle the marker effect
         await tokenHUD.object.toggleEffect(effectObject);
     }
-
 
     static async clickRemoveDeletedColorMarkers(event, app, data)
     {
@@ -191,6 +197,32 @@ export class TokenColorMarker {
             if(!colors.find(x => x.id === colorFlagEntry[0])) {
 
                 await this.clickMarkerIcon(app, colorFlagEntry[0], data);
+            }
+        }
+    }
+
+    static updateCombatTrackerIcons(html)
+    {
+        // het the token effects div in the combat tracker
+        let effects = html.find(".token-effects");
+
+        // loop through each effect
+        for (const effect of effects.children()) {
+            //only update if the effect is a token color maker
+            if (effect.src.indexOf(MODULENAME) >= 0)
+            {
+                // get the hex value from the image url
+                let hex = effect.src.split("hex=")[1];
+                
+                // add a new icon with the correct color
+                $(effect).before(
+                    `<div class="combatant-control ${MODULENAME}-combat-icon-wrapper">
+                        <i class="fa-solid fa-square-small ${MODULENAME}-combat-icon" style="color: ${hex};"></i>
+                    </div>`
+                );
+
+                //hide the icon created from the white image
+                effect.hidden = true;
             }
         }
     }

@@ -36,14 +36,28 @@
 .token-color-marker {
     margin: 0 !important;
     opacity: 0.7;
+    border: 1px solid transparent;
 }
 
 .token-color-marker:hover {
     opacity: 1 !important;
+    border: 1px solid var(--color-border-highlight);
+    border-radius: 5px;
 }
 
 .token-color-marker.active {
     opacity: 1 !important;
+    border: 1px solid var(--color-border-highlight);
+    border-radius: 5px;
+}
+
+.token-color-marker.active i {
+    
+}
+
+.token-color-marker-icon {
+    font-size: 24px; 
+    display: block;
 }
 
 /***** Color Settings Menu *****/
@@ -84,4 +98,25 @@
 .token-color-marker-color-delete-icon-button:hover, .token-color-marker-color-delete-icon-button:focus {
     box-shadow: none;
     text-shadow: 0 0 5px red;
+}
+
+/***** CombatTracker *****/
+
+.token-color-marker-combat-icon-wrapper {
+    display: inline;
+    width: 16px;
+    height: 16px !important;
+    margin: 1px 0;
+    border: none;
+    border-radius: 0;
+    box-sizing: border-box;
+    max-width: 100%;
+    text-align: center;
+    float: none !important;
+}
+
+.token-color-marker-combat-icon {
+    font-size: 18px;
+    position:relative;
+    top: calc(50% - 12px);
 }
