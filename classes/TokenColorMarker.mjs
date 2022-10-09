@@ -6,7 +6,7 @@ export const MODULENAME = "token-color-marker";
 const RAINBOWMARKER = `modules/${MODULENAME}/icons/rainbow.webp`
 export const WHITEMARKER = `modules/${MODULENAME}/icons/white-marker.webp`;
 
-const FLAGS = {
+export const FLAGS = {
     COLORMARKERCLASS: 'colorMarkerClass',
     COLORID: 'colorId'
 }

@@ -1,6 +1,6 @@
 import { IconManager } from './IconManager.mjs';
 import { Settings } from './Settings.mjs';
-import { MODULENAME, TokenColorMarker } from './TokenColorMarker.mjs';
+import { FLAGS, MODULENAME, TokenColorMarker } from './TokenColorMarker.mjs';
 
 // A class that contains the main functionality for the module with a few 
 // specific changes to work for the PF2e system
@@ -36,8 +36,6 @@ export class TokenColorMarkerPF2e extends TokenColorMarker {
                 }
             }];
     
-            effectObject.setFlag(MODULENAME, FLAGS.COLORID, colorId);
-
             // toggle the marker effect
             await tokenHUD.object.document.actor.createEmbeddedDocuments("Item", effectObject);
         }
