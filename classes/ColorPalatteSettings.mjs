@@ -73,9 +73,6 @@ export class ColorPalatteSettings extends FormApplication {
 
         // update the database with the updated Color list
         await game.settings.set(MODULENAME, Settings.COLORS, colors);
-
-        // create the image file
-        await IconManager.saveIconImage(null);
     }
 
     // handles the create and delete actions

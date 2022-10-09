@@ -6,6 +6,20 @@ import { FLAGS, MODULENAME, TokenColorMarker } from './TokenColorMarker.mjs';
 // specific changes to work for the PF2e system
 export class TokenColorMarkerPF2e extends TokenColorMarker {
 
+    static async addTokenColorMarkerModule() {
+        super.addTokenColorMarkerModule();
+
+        Hooks.on('deleteItem', (effect) => { 
+            let colorId = this.getEffectColorId(effect);
+            // If a color marker, then remove active class on the color marker palette
+            if(colorId) {
+                // deactivate the icon in the palette
+                let paletteIcon = $(`.${MODULENAME}[data-color-id="${colorId}"]`)[0];
+                paletteIcon?.classList.remove("active");
+            }
+        });
+    }
+
     static async toggleMarkerToToken(tokenHUD, colorId, data) {
         
         const existing = tokenHUD.object.document.actor.items.find(e => e.getFlag(MODULENAME, FLAGS.COLORID) === colorId);
@@ -39,6 +53,9 @@ export class TokenColorMarkerPF2e extends TokenColorMarker {
             // toggle the marker effect
             await tokenHUD.object.document.actor.createEmbeddedDocuments("Item", effectObject);
         }
+
+        // refresh to show active status markers on palette
+        await tokenHUD.render();
     }
 
     static isColorActiveOnToken(tokenHUD, colorId) {
@@ -54,5 +71,6 @@ export class TokenColorMarkerPF2e extends TokenColorMarker {
     static async removeEffect(app, effectId) {
         const existing = app.object.document.actor.items.find(e => e.getFlag(MODULENAME, FLAGS.COLORID) === effectId);
         await existing.delete();
+        await app.render();
     }
 }

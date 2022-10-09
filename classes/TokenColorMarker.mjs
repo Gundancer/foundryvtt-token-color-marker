@@ -15,7 +15,6 @@ export const FLAGS = {
 export class TokenColorMarker {
     static addTokenColorMarkerModule() {
         Hooks.on('renderTokenHUD', (app, html, data) => { 
-
             // if the ENABLE_BUTTON_SETTING setting is false, return early
             if (!game.settings.get(MODULENAME, Settings.ENABLE_BUTTON_SETTING)) {
                 return;
@@ -28,12 +27,12 @@ export class TokenColorMarker {
 
             // Add the UI
             this.addTokenColorMarkerUI(app, html, data);
-            
+
             // register click event listener for token color marker button
             html.on('click', `.control-icon[data-action="${MODULENAME}"]`, (event) => {
                 this.activateTokenColorMarkerButton($(event.currentTarget), app);
             });
-    
+
             let palette = html.find(`.${MODULENAME}-palette`);
 
             // register click event listener for token color marker palette icons
@@ -45,12 +44,12 @@ export class TokenColorMarker {
             palette.on('contextmenu', `.${MODULENAME}`, (event) => {
                 this.clickMarkerPaletteIcons(event, app, data);
             });
-    
+
             // register click event listener for effects button
             html.on('click', '.control-icon[data-action="effects"]', (event) => {
                 this.deactivateTokenColorMarkerButton($(event.currentTarget));
             });
-    
+
             // register click event listener for token color marker palette icons
             palette.on('click', `#remove-deleted-colors`, (event) => {
                 this.clickRemoveDeletedColorMarkers(event, app, data);
@@ -60,7 +59,6 @@ export class TokenColorMarker {
             palette.on('contextmenu', `#remove-deleted-colors`, (event) => {
                 this.clickRemoveDeletedColorMarkers(event, app, data);
             });
-
         });
     }
 
