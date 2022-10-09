@@ -1,12 +1,14 @@
+import { IconManager } from "./IconManager.mjs";
 import { Settings } from "./Settings.mjs";
 
 export const MODULENAME = "token-color-marker";
 
 const RAINBOWMARKER = `modules/${MODULENAME}/icons/rainbow.webp`
-const WHITEMARKER = `modules/${MODULENAME}/icons/white-marker.webp`;
+export const WHITEMARKER = `modules/${MODULENAME}/icons/white-marker.webp`;
 
 const FLAGS = {
     COLORMARKERCLASS: 'colorMarkerClass',
+    COLORID: 'colorId'
 }
 
 // A class that contains the main functionality for the module
@@ -60,11 +62,6 @@ export class TokenColorMarker {
             });
 
         });
-
-        Hooks.on('renderCombatTracker', (tracker, html, data) => { 
-            // update the color marker icons in the combat tracker
-            this.updateCombatTrackerIcons(html);
-        });
     }
 
     static addTokenColorMarkerUI(tokenHUD, html, data) {
@@ -79,7 +76,7 @@ export class TokenColorMarker {
         // create a color marker for each color
         colors.forEach(color => {
             // Check if the effects is already on the token
-            let activeColor = tokenHUD.object.document.actor.effects.find(e => e.getFlag("core", "statusId") === color.id);
+            let activeColor = this.isColorActiveOnToken(tokenHUD, color.id)
             markers = markers.concat(
                 `<div class="${MODULENAME} ${activeColor ? 'active' : ''}" data-color-id="${color.id}" id="${MODULENAME}-${color.id}" title="${color.label}">
                     <i class="fa-solid fa-square-small ${MODULENAME}-icon" style="color: ${color.hex};"></i>
@@ -87,18 +84,8 @@ export class TokenColorMarker {
             );
         });
 
-        // This will check if a token has a color marker still on it that has been deleted. If it does, a trash icon
-        // will be visible on the palette to remove them.
-        let showTrash = false;
-        let colorFlags = tokenHUD.object.document.flags[MODULENAME];
-        if(colorFlags) {
-            Object.entries(colorFlags)?.forEach(colorFlag => {
-                if(colorFlag[0] !== FLAGS.COLORMARKERCLASS && !colors.find(x => x.id === colorFlag[0]))
-                {
-                    showTrash = true;
-                }
-            });
-        }
+        // If there is a deleted marker, a trash icon will be visible on the palette to remove them.
+        let showTrash = this.hasDeletedMarker(tokenHUD, colors);
 
         // check if token color marker "control-icon" is active when the TokenHUD gets refreshed.
         // the refresh happens during "ToggleEffect". delete the flag after one time use.
@@ -119,6 +106,36 @@ export class TokenColorMarker {
                 </div>
             </div>`
         );
+    }
+
+    static isColorActiveOnToken(tokenHUD, colorId) {
+        let effect = tokenHUD.object.document.actor.effects.find(e => e.getFlag("core", "statusId") === colorId);
+        if(effect) {
+            return true;
+        }
+        return false;
+    }
+
+    // This will check if a token has a color marker still on it that has been deleted.
+    static hasDeletedMarker(tokenHUD, colors) {
+        let effects = this.getTokenEffects(tokenHUD);
+        for (const effect of effects) {
+            let effectId = this.getEffectColorId(effect);
+            // only include effects that are part of token color marker
+            if(effectId && !colors.find(x => x.id === effectId))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    static getTokenEffects(tokenHUD) {
+        return tokenHUD.object.document.actor.effects;
+    }
+
+    static getEffectColorId(effect) {
+        return effect.getFlag(MODULENAME, FLAGS.COLORID);
     }
 
     static activateTokenColorMarkerButton(colorMarkerButton, tokenHUD) {
@@ -165,16 +182,18 @@ export class TokenColorMarker {
         let colors = game.settings.get(MODULENAME, Settings.COLORS);
         let color = colors.find(x => x.id === colorId);
 
-        let hex = (color ? color.hex : "#ffffff");
-
         // the marker effect to be added to the token
         let effectObject = {
             id: colorId,
             // if the color has been deleted, set the label to the color id
             label: (color ? color.label : colorId), 
             // if the color has been deleted, set the icon to the default rainbow image
-            icon: `${WHITEMARKER}?hex=${hex}`,
-            tint: (color ? color.hex : "#ffffff")
+            icon: IconManager.getImagePath(color.hex),
+            flags: { 
+                [MODULENAME]: {
+                    [FLAGS.COLORID]: colorId
+                }
+            }
         }
 
         // toggle the marker effect
@@ -189,41 +208,22 @@ export class TokenColorMarker {
         // get the colors from settings
         let colors = game.settings.get(MODULENAME, Settings.COLORS);
         // get the color marker flags on the token
-        let colorFlags = app.object.data.flags[MODULENAME];
+        let effects = this.getTokenEffects(app);
 
-        let colorFlagEntries = Object.entries(colorFlags);
         // find any deleted color markers on a token and remove them.
-        for (const colorFlagEntry of colorFlagEntries) {
-            if(!colors.find(x => x.id === colorFlagEntry[0])) {
-
-                await this.clickMarkerIcon(app, colorFlagEntry[0], data);
+        for (const effect of effects) {
+            let effectId = this.getEffectColorId(effect);
+            if(effectId && !colors.find(x => x.id === effectId)) {
+                await this.removeEffect(app, effectId);
             }
         }
     }
 
-    static updateCombatTrackerIcons(html)
-    {
-        // het the token effects div in the combat tracker
-        let effects = html.find(".token-effects");
-
-        // loop through each effect
-        for (const effect of effects.children()) {
-            //only update if the effect is a token color maker
-            if (effect.src.indexOf(MODULENAME) >= 0)
-            {
-                // get the hex value from the image url
-                let hex = effect.src.split("hex=")[1];
-                
-                // add a new icon with the correct color
-                $(effect).before(
-                    `<div class="combatant-control ${MODULENAME}-combat-icon-wrapper">
-                        <i class="fa-solid fa-square-small ${MODULENAME}-combat-icon" style="color: ${hex};"></i>
-                    </div>`
-                );
-
-                //hide the icon created from the white image
-                effect.hidden = true;
-            }
+    static async removeEffect(app, effectId) {
+        let effectObject = {
+            id: effectId,
+            icon: RAINBOWMARKER
         }
+        await app.object.toggleEffect(effectObject, {active:false});
     }
 }

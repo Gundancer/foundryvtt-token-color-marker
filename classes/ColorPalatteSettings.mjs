@@ -1,3 +1,4 @@
+import { IconManager } from "./IconManager.mjs";
 import { Settings } from "./Settings.mjs";
 import { MODULENAME } from "./TokenColorMarker.mjs";
 
@@ -21,7 +22,7 @@ export class ColorPalatteSettings extends FormApplication {
       return mergedOptions;
     }
   
-    // het the color list in the settings
+    // get the color list in the settings
     static getColors() {
       return game.settings.get(MODULENAME, Settings.COLORS);
     }
@@ -33,13 +34,16 @@ export class ColorPalatteSettings extends FormApplication {
         const newColor = {
             hex: hexValue,
             label: game.i18n.localize(`${MODULENAME}.color-manager-menu.new-color-label`),
-            id: foundry.utils.randomID(16)
+            id: IconManager.createNewColorId()
         }
     
         let colors = this.getColors().concat(newColor);
 
         // update the database with the new Colors
-        return game.settings.set(MODULENAME, Settings.COLORS, colors);
+        await game.settings.set(MODULENAME, Settings.COLORS, colors);
+
+        // create the image file
+        await IconManager.saveIconImage(hexValue);
     }
 
     static async updateColor(colorId, field, value) {
@@ -52,10 +56,13 @@ export class ColorPalatteSettings extends FormApplication {
         relevantColor[field] = value;
 
         // update the database with the updated Color list
-        return await game.settings.set(MODULENAME, Settings.COLORS, colors);
+        await game.settings.set(MODULENAME, Settings.COLORS, colors);
+
+        // update the image file
+        await IconManager.saveIconImage(value);
     }
     
-    static deleteColor(colorId) {
+    static async deleteColor(colorId) {
         // get the lis of colors
         let colors = this.getColors();
 
@@ -65,7 +72,10 @@ export class ColorPalatteSettings extends FormApplication {
         })
 
         // update the database with the updated Color list
-        return game.settings.set(MODULENAME, Settings.COLORS, colors);
+        await game.settings.set(MODULENAME, Settings.COLORS, colors);
+
+        // create the image file
+        await IconManager.saveIconImage(null);
     }
 
     // handles the create and delete actions

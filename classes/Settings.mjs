@@ -1,4 +1,5 @@
 import { ColorPalatteSettings } from './ColorPalatteSettings.mjs';
+import { IconManager } from './IconManager.mjs';
 import { MODULENAME } from './TokenColorMarker.mjs';
 
 const DEFAULT_COLORS = [
@@ -18,10 +19,11 @@ export class Settings {
     static getDefaultColorSettings() {
       let defaultColors = [];
 
-      DEFAULT_COLORS.forEach(defaultColor => {
-        let label = game.i18n.localize(`${MODULENAME}.default-setting-colors.${defaultColor}`)
-        defaultColors.push( { hex: `${defaultColor}`, label: label, id: foundry.utils.randomID(16) })
-      });
+      for (const defaultColor of DEFAULT_COLORS) {
+        let label = game.i18n.localize(`${MODULENAME}.default-setting-colors.${defaultColor}`);
+        let colorId = defaultColor.split('#')[1];
+        defaultColors.push( { hex: `${defaultColor}`, label: label, id: colorId });
+      };
 
       return defaultColors;
     }
@@ -70,6 +72,15 @@ export class Settings {
         type: Array,
         scope: 'world',
         config: false,
+      });
+    }
+
+    static createImagesforSettings(){
+      IconManager.createDirectory();
+
+      let colors = game.settings.get(MODULENAME, Settings.COLORS);
+      colors.forEach(color => {
+        IconManager.saveIconImage(color.hex);
       });
     }
 }
