@@ -8,9 +8,10 @@ console.log(`${MODULENAME} | Module loaded`);
 Hooks.once('i18nInit', () => { 
     Settings.registerSettings();
 
-    Settings.createImagesforSettings();
-
-
+    // only create if the user is the GM. players dont have file creation by default
+    if(game.user.isGM) {
+        Settings.createImagesforSettings();
+    }
   });
 
 Hooks.on('ready', () => {
