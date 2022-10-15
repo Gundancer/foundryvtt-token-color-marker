@@ -7,14 +7,14 @@ console.log(`${MODULENAME} | Module loaded`);
 
 Hooks.once('i18nInit', () => { 
     Settings.registerSettings();
+  });
 
+Hooks.on('ready', () => {
     // only create if the user is the GM. players dont have file creation by default
     if(game.user.isGM) {
         Settings.createImagesforSettings();
     }
-  });
-
-Hooks.on('ready', () => {
+    
     let tokenColorMarker;
 
     if(game.system.id === 'pf2e') {
