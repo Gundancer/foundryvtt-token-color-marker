@@ -4,7 +4,7 @@ import { Settings } from "./Settings.mjs";
 export const MODULENAME = "token-color-marker";
 
 const RAINBOWMARKER = `modules/${MODULENAME}/icons/rainbow.webp`
-export const WHITEMARKER = `modules/${MODULENAME}/icons/white-marker.webp`;
+const MONOCHROMEMARKER = `modules/${MODULENAME}/icons/monochrome.webp`;
 
 export const FLAGS = {
     COLORMARKERCLASS: 'colorMarkerClass',
@@ -13,6 +13,18 @@ export const FLAGS = {
 
 // A class that contains the main functionality for the module
 export class TokenColorMarker {
+    static DefaultIcon = RAINBOWMARKER;
+
+    static SetDefaultIcon() {
+        // use monochrome icon
+        if (game.settings.get(MODULENAME, Settings.ENABLE_MONOCHROME_ICON_SETTING)) {
+            TokenColorMarker.DefaultIcon = MONOCHROMEMARKER;
+        }
+        else {
+            TokenColorMarker.DefaultIcon = RAINBOWMARKER;
+        }
+    }
+
     static addTokenColorMarkerModule() {
         Hooks.on('renderTokenHUD', (app, html, data) => { 
             // if the ENABLE_BUTTON_SETTING setting is false, return early
@@ -97,7 +109,7 @@ export class TokenColorMarker {
         // insert a button at the top of this element
         rightButtonColumn.prepend(
             `<div class="control-icon ${active ?? ''}" data-action="${MODULENAME}">
-                <img src="${RAINBOWMARKER}" width="36" height="36" title="${buttonTooltip}">
+                <img src="${TokenColorMarker.DefaultIcon}" width="36" height="36" title="${buttonTooltip}">
                 <div class="${MODULENAME}-palette ${active ?? ''}">
                     ${markers}
                     <i id="remove-deleted-colors" class="fas fa-trash ${showTrash ? 'active' : ''}" title="${trashTooltip}"></i>
@@ -220,7 +232,7 @@ export class TokenColorMarker {
     static async removeEffect(app, effectId) {
         let effectObject = {
             id: effectId,
-            icon: RAINBOWMARKER
+            icon: TokenColorMarker.DefaultIcon
         }
         await app.object.toggleEffect(effectObject, {active:false});
     }

@@ -24,5 +24,8 @@ Hooks.on('ready', () => {
         tokenColorMarker = TokenColorMarker;
     }
 
+    // sets either rainbow or monochrome button icon
+    tokenColorMarker.SetDefaultIcon();
+
     tokenColorMarker.addTokenColorMarkerModule();
 });

@@ -20,11 +20,15 @@
             "enable-button-for-gm-only": {
                 "Name": "Display Button for the GM only",
                 "Hint": "Controls whether or not the button is displayed for only the GM"
-              },
+            },
             "color-manager-menu": {
                 "Name": "Color Settings",
                 "Label": "My Color Settings",
                 "Hint": "This is where the colors can be customized"
+            },
+            "enable-mono-Icon": {
+                "Name": "Use Monochrome Icon",
+                "Hint": "Controls which icon will be used for the button either rainbow gradient or monochrome."
             }
         },
         "color-manager-menu":{

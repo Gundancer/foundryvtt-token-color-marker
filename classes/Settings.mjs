@@ -1,6 +1,6 @@
 import { ColorPalatteSettings } from './ColorPalatteSettings.mjs';
 import { IconManager } from './IconManager.mjs';
-import { MODULENAME } from './TokenColorMarker.mjs';
+import { MODULENAME, TokenColorMarker } from './TokenColorMarker.mjs';
 
 const DEFAULT_COLORS = [
   "#ff0000",
@@ -30,6 +30,7 @@ export class Settings {
   
     static ENABLE_BUTTON_SETTING = 'enable-button';
     static ENABLE_BUTTON_GM_ONLY_SETTING = 'enable-button-for-gm-only';
+    static ENABLE_MONOCHROME_ICON_SETTING = 'enable-mono-Icon';
     static COLORS = 'colors';
 
     static registerSettings() {
@@ -72,6 +73,17 @@ export class Settings {
         type: Array,
         scope: 'world',
         config: false,
+      });
+
+      // register the setting to enable the token color marker button to only be seen by the GM
+      game.settings.register(MODULENAME, this.ENABLE_MONOCHROME_ICON_SETTING, {
+        name: `${MODULENAME}.settings.${this.ENABLE_MONOCHROME_ICON_SETTING}.Name`,
+        default: false,
+        type: Boolean,
+        scope: 'world',
+        config: true,
+        hint: `${MODULENAME}.settings.${this.ENABLE_MONOCHROME_ICON_SETTING}.Hint`,
+        onChange: () => TokenColorMarker.SetDefaultIcon()
       });
     }
 
