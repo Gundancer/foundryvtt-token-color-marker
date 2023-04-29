@@ -5,7 +5,7 @@ const HEIGHT = 100;
 
 const activeSource = "data";
 
-export const FILEEXTENTION = "png";
+export const FILEEXTENTION = "webp";
 
 // A class to create the color marker icon
 export class IconManager {
