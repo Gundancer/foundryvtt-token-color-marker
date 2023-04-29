@@ -30,3 +30,12 @@ Token Color Marker comes with some module settings. The Token Color Marker butto
 The "My Color Settings" button in module settings will open the color customization window. The name of a color marker can be modified here along with the hex value. The color picker column shows the color and opens a color picker. The trash icon is used to delete. The "Add Color" button adds a new color marker with a random color. The image below is an example of adding "Pink" to the color marker palette.
 
 ![Token Color Marker](README-img/CustomColors.jpg)
+
+## PF2e system Only
+There is a setting to add the icon in the target section of the chat messages. this is only availible on pf2e system
+
+![Token Color Marker](README-img/ChatMessageSetting.jpg)
+
+In this example, Monster1 has the green token color marker active.
+
+![Token Color Marker](README-img/AttackChatMessage.jpg)
