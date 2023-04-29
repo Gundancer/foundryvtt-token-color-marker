@@ -67,7 +67,7 @@ export class Settings {
         hint: `${MODULENAME}.settings.color-manager-menu.Hint`,
       });
 
-      // register the colors settiong to allow for color customization 
+      // register the colors setting to allow for color customization 
       game.settings.register(MODULENAME, this.COLORS, {
         default: this.getDefaultColorSettings(),
         type: Array,
@@ -75,7 +75,7 @@ export class Settings {
         config: false,
       });
 
-      // register the setting to enable the token color marker button to only be seen by the GM
+      // register the setting to toggle the rainbow or monochrome icon
       game.settings.register(MODULENAME, this.ENABLE_MONOCHROME_ICON_SETTING, {
         name: `${MODULENAME}.settings.${this.ENABLE_MONOCHROME_ICON_SETTING}.Name`,
         default: false,

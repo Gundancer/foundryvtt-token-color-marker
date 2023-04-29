@@ -3,17 +3,23 @@ import { MODULENAME } from "./TokenColorMarker.mjs";
 const WIDTH = 100;
 const HEIGHT = 100;
 
+const activeSource = "data";
+
 export const FILEEXTENTION = "png";
 
 // A class to create the color marker icon
 export class IconManager {
 
     static getImagePath(hexColor) {
-        return `${this.getDirectoryPath()}/${hexColor.split('#')[1]}.${FILEEXTENTION}`;
+        return `${this.getDirectoryPath()}/${this.getFileName(hexColor)}`;
     }
 
     static getDirectoryPath() {
         return `worlds/${game.world.id}/${MODULENAME}`;
+    }
+
+    static getFileName(hexColor) {
+        return `${hexColor.split('#')[1]}.${FILEEXTENTION}`;
     }
 
     static createNewColorId() {
@@ -22,27 +28,34 @@ export class IconManager {
 
     static async saveIconImage(hexColor) {
 
-        // create a canvas to draw the icon
-        var canvas = document.createElement("canvas");
+        var directory = await FilePicker.browse(activeSource, this.getDirectoryPath());
+        var iconExists = directory.files.includes(this.getImagePath(hexColor));
 
-        canvas.width = WIDTH;
-        canvas.height = HEIGHT;
-        var context = canvas.getContext("2d");
+        // if the icon does not alreeady exist, create it.
+        if(!iconExists)
+        {
+            // create a canvas to draw the icon
+            var canvas = document.createElement("canvas");
 
-        // draw a filed in rounded square of the hex color
-        this.drawRoundRect(context, 15, 15, 70, 70, 25, hexColor); 
+            canvas.width = WIDTH;
+            canvas.height = HEIGHT;
+            var context = canvas.getContext("2d");
 
-        // extract as new image blob
-        canvas.toBlob((blob) => { 
-            return this.saveFile(blob, hexColor); 
-        }, `image/${FILEEXTENTION}`);
+            // draw a filed in rounded square of the hex color
+            this.drawRoundRect(context, 15, 15, 70, 70, 25, hexColor); 
+
+            // extract as new image blob
+            canvas.toBlob((blob) => { 
+                return this.saveFile(blob, hexColor); 
+            }, `image/${FILEEXTENTION}`);
+        }
     }
 
     static async saveFile(blob, hexColor) {
         // create new file 
-        let file = new File([blob], `${hexColor.split('#')[1]}.${FILEEXTENTION}`, { type: blob.type });
+        let file = new File([blob], this.getFileName(hexColor), { type: blob.type });
     
-        const result = await FilePicker.upload("data", this.getDirectoryPath(), file, {}, { notify: false });
+        const result = await FilePicker.upload(activeSource, this.getDirectoryPath(), file, {}, { notify: false });
     
         return result.path;
     }
@@ -50,7 +63,7 @@ export class IconManager {
     static async createDirectory() {
         // create directory. catch error if it already exists
         try {
-            await FilePicker.createDirectory("data", this.getDirectoryPath());
+            await FilePicker.createDirectory(activeSource, this.getDirectoryPath());
         }
         catch(error) {
             if (!error.startsWith("EEXIST") && !error.startsWith("The S3 key")){
