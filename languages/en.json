@@ -29,6 +29,10 @@
             "enable-mono-Icon": {
                 "Name": "Use Monochrome Icon",
                 "Hint": "Controls which icon will be used for the button either rainbow gradient or monochrome."
+            },
+            "enable-icon-in-chat-message": {
+                "Name": "Show Color Markers In Chat Message",
+                "Hint": "Shows the token color markers by the tarket's name in the chat message."
             }
         },
         "color-manager-menu":{

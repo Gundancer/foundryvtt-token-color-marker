@@ -31,6 +31,8 @@ export class Settings {
     static ENABLE_BUTTON_SETTING = 'enable-button';
     static ENABLE_BUTTON_GM_ONLY_SETTING = 'enable-button-for-gm-only';
     static ENABLE_MONOCHROME_ICON_SETTING = 'enable-mono-Icon';
+    static ENABLE_ICON_IN_CHAT_MESSAGE_SETTING = 'enable-icon-in-chat-message';
+
     static COLORS = 'colors';
 
     static registerSettings() {
@@ -43,7 +45,6 @@ export class Settings {
         scope: 'world',
         config: true,
         hint: `${MODULENAME}.settings.${this.ENABLE_BUTTON_SETTING}.Hint`,
-        onChange: () => ui.players.render()
       });
 
       // register the setting to enable the token color marker button to only be seen by the GM
@@ -54,7 +55,6 @@ export class Settings {
         scope: 'world',
         config: true,
         hint: `${MODULENAME}.settings.${this.ENABLE_BUTTON_GM_ONLY_SETTING}.Hint`,
-        onChange: () => ui.players.render()
       });
 
       // register ColorPalatteSettings form application as a settings menu
@@ -85,6 +85,18 @@ export class Settings {
         hint: `${MODULENAME}.settings.${this.ENABLE_MONOCHROME_ICON_SETTING}.Hint`,
         onChange: () => TokenColorMarker.SetDefaultIcon()
       });
+
+      if(game.system.id === 'pf2e') {
+        // register the setting to toggle the rainbow or monochrome icon
+        game.settings.register(MODULENAME, this.ENABLE_ICON_IN_CHAT_MESSAGE_SETTING, {
+          name: `${MODULENAME}.settings.${this.ENABLE_ICON_IN_CHAT_MESSAGE_SETTING}.Name`,
+          default: true,
+          type: Boolean,
+          scope: 'world',
+          config: true,
+          hint: `${MODULENAME}.settings.${this.ENABLE_ICON_IN_CHAT_MESSAGE_SETTING}.Hint`,
+        });
+      }
     }
 
     static createImagesforSettings(){

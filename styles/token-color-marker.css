@@ -56,6 +56,15 @@
     display: block;
 }
 
+/***** Chat Message *****/
+
+.token-color-marker-icon-chat {
+    font-size: 14px; 
+    display: inline;
+    padding: 2px;
+    vertical-align: bottom;
+}
+
 /***** Color Settings Menu *****/
 
 .token-color-marker-palatte-settings {
