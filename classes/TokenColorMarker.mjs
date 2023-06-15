@@ -99,8 +99,8 @@ export class TokenColorMarker {
 
         // check if token color marker "control-icon" is active when the TokenHUD gets refreshed.
         // the refresh happens during "ToggleEffect". delete the flag after one time use.
-        let active = tokenHUD.object.document.getFlag(`${MODULENAME}`, FLAGS.COLORMARKERCLASS);
-        tokenHUD.object.document.unsetFlag(`${MODULENAME}`, FLAGS.COLORMARKERCLASS);
+        let active = tokenHUD[FLAGS.COLORMARKERCLASS];
+        tokenHUD[FLAGS.COLORMARKERCLASS] = "";
 
         // create localized tooltip for button
         const buttonTooltip = game.i18n.localize(`${MODULENAME}.button-title`);
@@ -119,7 +119,7 @@ export class TokenColorMarker {
     }
 
     static isColorActiveOnToken(tokenHUD, colorId) {
-        let effect = tokenHUD.object.document.actor.effects.find(e => e.getFlag("core", "statusId") === colorId);
+        let effect = tokenHUD.object.document.actor.effects.find(e => e.statuses.find(s => s === colorId));
         if(effect) {
             return true;
         }
@@ -182,7 +182,7 @@ export class TokenColorMarker {
     static async clickMarkerIcon(tokenHUD, colorId, data) {
         // set the token color marker menu button as active when UI refreshes.
         // This is a one time use flag to keep the token color marker "control-icon" active
-        await tokenHUD.object.document.setFlag(`${MODULENAME}`, FLAGS.COLORMARKERCLASS, 'active');
+        tokenHUD[FLAGS.COLORMARKERCLASS] = "active";
 
         this.toggleMarkerToToken(tokenHUD, colorId, data);
     }
