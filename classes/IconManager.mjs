@@ -66,7 +66,7 @@ export class IconManager {
             await FilePicker.createDirectory(activeSource, this.getDirectoryPath());
         }
         catch(error) {
-            if (!error.startsWith("EEXIST") && !error.startsWith("The S3 key")){
+            if (!error.toString().startsWith("Error: EEXIST") && !error.toString().startsWith("Error: The S3 key")){
                 throw error;
             } 
         }
