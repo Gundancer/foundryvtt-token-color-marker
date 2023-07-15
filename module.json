@@ -8,7 +8,7 @@
       "flags": {}
     }
   ],
-  "version": "2.2.4",
+  "version": "2.2.5",
   "compatibility": {
     "minimum": "10",
     "verified": "10"
@@ -28,7 +28,7 @@
     "token-color-marker.mjs"
   ],
   "manifest": "https://github.com/Gundancer/foundryvtt-token-color-marker/releases/latest/download/module.json",
-  "download": "https://github.com/Gundancer/foundryvtt-token-color-marker/releases/download/v2.2.4/module.zip",
+  "download": "https://github.com/Gundancer/foundryvtt-token-color-marker/releases/download/v2.2.5/module.zip",
   "readme": "https://raw.githubusercontent.com/Gundancer/foundryvtt-token-color-marker/blob/main/README.md",
   "url": "https://github.com/Gundancer/foundryvtt-token-color-marker"
 }
