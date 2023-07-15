@@ -15,7 +15,7 @@ export class IconManager {
     }
 
     static getDirectoryPath() {
-        return `worlds/${game.world.id}/${MODULENAME}`;
+        return `${MODULENAME}`;
     }
 
     static getFileName(hexColor) {
