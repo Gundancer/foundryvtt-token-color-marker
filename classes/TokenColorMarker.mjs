@@ -203,7 +203,8 @@ export class TokenColorMarker {
                 [MODULENAME]: {
                     [FLAGS.COLORID]: colorId
                 }
-            }
+            },
+            name: (color ? color.label : colorId) // This is not used for UI text. label may not be needed anymore
         }
 
         // toggle the marker effect
