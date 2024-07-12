@@ -1,5 +1,4 @@
 import { TokenColorMarkerPF2e } from './classes/TokenColorMarkerPF2e.mjs';
-import { TokenColorMarkerDnd5e } from './classes/TokenColorMarkerDnd5e.mjs';
 import { TokenColorMarker, MODULENAME } from './classes/TokenColorMarker.mjs';
 import { Settings } from './classes/Settings.mjs';
 import { ChatMessageIconPF2e } from './classes/ChatMessageIconPF2e.mjs';
@@ -26,9 +25,6 @@ Hooks.on('ready', () => {
 
     if(game.system.id === 'pf2e') {
         tokenColorMarker = TokenColorMarkerPF2e;
-    }
-    else if(game.system.id === 'dnd5e') {
-        tokenColorMarker = TokenColorMarkerDnd5e;
     }
     else {
         tokenColorMarker = TokenColorMarker;

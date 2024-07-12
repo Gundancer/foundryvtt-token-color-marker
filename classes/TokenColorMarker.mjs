@@ -193,22 +193,20 @@ export class TokenColorMarker {
         let color = colors.find(x => x.id === colorId);
 
         // the marker effect to be added to the token
-        let effectObject = {
-            id: colorId,
-            // if the color has been deleted, set the label to the color id
-            label: (color ? color.label : colorId), 
-            // if the color has been deleted, set the icon to the default rainbow image
-            icon: IconManager.getImagePath(color.hex),
-            flags: { 
-                [MODULENAME]: {
-                    [FLAGS.COLORID]: colorId
-                }
-            },
-            name: (color ? color.label : colorId) // This is not used for UI text. label may not be needed anymore
-        }
+        CONFIG.statusEffects.push(
+            { 
+                id: colorId, 
+                name: (color ? color.label : colorId),
+                lable: (color ? color.label : colorId), 
+                img: IconManager.getImagePath(color.hex) 
+            });
 
         // toggle the marker effect
-        await tokenHUD.object.toggleEffect(effectObject);
+        await tokenHUD.actor.toggleStatusEffect(colorId, {overlay: false});
+
+        const index = CONFIG.statusEffects.findIndex((obj) => obj.id === colorId);
+        CONFIG.statusEffects.splice(index, 1);
+
     }
 
     static async clickRemoveDeletedColorMarkers(event, app, data)
