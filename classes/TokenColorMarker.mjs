@@ -106,10 +106,16 @@ export class TokenColorMarker {
         const buttonTooltip = game.i18n.localize(`${MODULENAME}.button-title`);
         const trashTooltip = game.i18n.localize(`${MODULENAME}.trash-button-title`);
 
+        let style = "";
+        if (!game.settings.get(MODULENAME, Settings.ENABLE_MONOCHROME_ICON_SETTING)) {
+            // if not the monochrome icon remove the overlay on the active image that changes the color. only happens on some systems
+            style = 'style="filter:none;"';
+        }
+
         // insert a button at the top of this element
         rightButtonColumn.prepend(
             `<div class="control-icon ${active ?? ''}" data-action="${MODULENAME}">
-                <img src="${TokenColorMarker.DefaultIcon}" width="36" height="36" title="${buttonTooltip}">
+                <img src="${TokenColorMarker.DefaultIcon}" width="36" height="36" title="${buttonTooltip}" ${style}>
                 <div class="${MODULENAME}-palette ${active ?? ''}">
                     ${markers}
                     <i id="remove-deleted-colors" class="fas fa-trash ${showTrash ? 'active' : ''}" title="${trashTooltip}"></i>
