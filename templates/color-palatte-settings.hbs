@@ -2,17 +2,27 @@
   <ul class="token-color-marker-palatte-settings flexcol">
     {{#if colors}}
     <li class="flexrow header">
-      <div class="name-col">Name</div>
-      <div>Hex</div>
-      <div>Color Picker</div>
+      <div class="order-col"></div>
+      <div class="name-col">{{localize "token-color-marker.color-manager-menu.name-header"}}</div>
+      <div class="hex-col">{{localize "token-color-marker.color-manager-menu.hex-header"}}</div>
+      <div class="hex-col">{{localize "token-color-marker.color-manager-menu.color-picker-header"}}</div>
+      <div class="delete-col"></div>
     </li>
     {{/if}}
     {{#each colors}}
-    <li class="flexrow" data-color-id="{{id}}">
+    <li class="flexrow" data-color-id="{{id}}" data-index="{{@index}}">
+      <div class="flex0 order-col-button-group">
+        <button type="button" title="{{localize "token-color-marker.color-manager-menu.move-up"}}" data-action="move-up" class="flex0 token-color-marker-color-icon-button" >
+          <i class="fas fa-caret-up"></i>
+        </button>
+        <button type="button" title="{{localize "token-color-marker.color-manager-menu.move-down"}}" data-action="move-down" class="flex0 token-color-marker-color-icon-button order-col-down">
+          <i class="fas fa-caret-down"></i>
+        </button> 
+      </div>
       <input type="text" name="{{id}}.label" value="{{label}}" class="name-col"/>
-      <input type="text" name="{{id}}.hex" value="{{hex}}" />
-      <input type="color" name="{{id}}.hex" value="{{hex}}" />
-      <button type="button" title="{{localize "token-color-marker.color-manager-menu.delete-color"}}" data-action="delete" class="flex0 token-color-marker-color-delete-icon-button">
+      <input type="text" name="{{id}}.hex" value="{{hex}}" class="hex-col"/>
+      <input type="color" name="{{id}}.hex" value="{{hex}}" class="hex-col"/>
+      <button type="button" title="{{localize "token-color-marker.color-manager-menu.delete-color"}}" data-action="delete" class="flex0 token-color-marker-color-icon-button">
         <i class="fas fa-trash"></i>
       </button>
     </li>

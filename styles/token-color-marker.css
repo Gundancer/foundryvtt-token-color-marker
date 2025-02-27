@@ -79,28 +79,48 @@
     gap: 0.5em;
 }
 
+.token-color-marker-palatte-settings > li .order-col{
+    max-width: 12px;
+}
+
+.token-color-marker-palatte-settings > li .order-col-button-group{
+    height: 27px;
+}
+
+.token-color-marker-palatte-settings > li .order-col-down{
+    top: -5px;
+    position: relative;
+}
+
 .token-color-marker-palatte-settings > li .name-col{
-    min-width: 250px;
+    min-width: 150px;
+}
+
+.token-color-marker-palatte-settings > li .hex-col{
+    max-width: 75px;
+}
+
+.token-color-marker-palatte-settings > li .delete-col{
+    max-width: 12px;
 }
 
 .token-color-marker-palatte-settings .header {
     font-weight: bold;
 }
 
-.token-color-marker-color-delete-icon-button {
+.token-color-marker-color-icon-button {
     background: transparent;
     padding: 0;
-    color: white;
     line-height: normal;
     border: 0;
     align-self: center;
 }
   
-.token-color-marker-color-delete-icon-button > i {
+.token-color-marker-color-icon-button > i {
     margin-right: 0;
 }
   
-.token-color-marker-color-delete-icon-button:hover, .token-color-marker-color-delete-icon-button:focus {
+.token-color-marker-color-icon-button:hover, .token-color-marker-color-icon-button:focus {
     box-shadow: none;
     text-shadow: 0 0 5px red;
 }

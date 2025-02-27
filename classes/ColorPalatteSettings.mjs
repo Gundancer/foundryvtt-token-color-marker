@@ -63,7 +63,7 @@ export class ColorPalatteSettings extends FormApplication {
     }
     
     static async deleteColor(colorId) {
-        // get the lis of colors
+        // get the list of colors
         let colors = this.getColors();
 
         // remove the color selected
@@ -75,11 +75,24 @@ export class ColorPalatteSettings extends FormApplication {
         await game.settings.set(MODULENAME, Settings.COLORS, colors);
     }
 
+    static async moveColor(from, to) {
+      // get the list of colors
+      let colors = this.getColors();
+
+      // change the order
+      colors.splice(to, 0, colors.splice(from, 1)[0]);
+
+      // update the database with the updated Color list
+      await game.settings.set(MODULENAME, Settings.COLORS, colors);
+    }
+
     // handles the create and delete actions
     async _handleButtonClick(event) {
       const clickedElement = $(event.currentTarget);
       const action = clickedElement.data().action;
-      const colorId = clickedElement.parents('[data-color-id]')?.data()?.colorId;
+      const parentData = clickedElement.parents('[data-color-id]')?.data();
+      const colorId = parentData?.colorId;
+      const index = parentData?.index;
   
       switch (action) {
         case 'create': {
@@ -101,6 +114,18 @@ export class ColorPalatteSettings extends FormApplication {
     
             break;
           }
+
+        case 'move-up': {
+            await ColorPalatteSettings.moveColor(index, index-1);
+            this.render();
+            break;
+        }
+
+        case 'move-down': {
+          await ColorPalatteSettings.moveColor(index, index+1);
+          this.render();
+          break;
+        }
   
         default:
           console.log(false, 'Invalid action detected', action);

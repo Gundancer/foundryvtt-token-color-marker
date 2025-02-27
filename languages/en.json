@@ -36,8 +36,13 @@
             }
         },
         "color-manager-menu":{
+            "name-header": "Name",
+            "hex-header": "Hex",
+            "color-picker-header": "Color Picker",
             "add-color": "Add Color",
             "delete-color": "Delete Color",
+            "move-up": "Move Up",
+            "move-down": "Move Down",
             "new-color-label": "New Color"
         },
         "confirms": {
