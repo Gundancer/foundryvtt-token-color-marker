@@ -29,21 +29,15 @@ export class ColorPalatteSettings extends FormApplication {
 
     // create a color and add it tothe settings color list
     static async createColor() {
-        // generate a random id for this new Color and populate
-        let hexValue = this.getRandomColor();
-        const newColor = {
-            hex: hexValue,
-            label: game.i18n.localize(`${MODULENAME}.color-manager-menu.new-color-label`),
-            id: IconManager.createNewColorId()
-        }
+        const newIcon = IconManager.createIcon();
     
-        let colors = this.getColors().concat(newColor);
+        let colors = this.getColors().concat(newIcon);
 
         // update the database with the new Colors
         await game.settings.set(MODULENAME, Settings.COLORS, colors);
 
         // create the image file
-        await IconManager.saveIconImage(hexValue);
+        await IconManager.saveIconImage(newIcon);
     }
 
     static async updateColor(colorId, field, value) {
@@ -59,7 +53,7 @@ export class ColorPalatteSettings extends FormApplication {
         await game.settings.set(MODULENAME, Settings.COLORS, colors);
 
         // update the image file
-        await IconManager.saveIconImage(value);
+        await IconManager.saveIconImage(relevantColor);
     }
     
     static async deleteColor(colorId) {

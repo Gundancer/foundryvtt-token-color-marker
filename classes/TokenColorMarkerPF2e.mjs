@@ -37,7 +37,7 @@ export class TokenColorMarkerPF2e extends TokenColorMarker {
                 // if the color has been deleted, set the label to the color id
                 name: (color ? color.label : colorId),
                 type: "effect",
-                img: IconManager.getImagePath(color.hex),
+                img: IconManager.getImagePath(color),
                 flags: { 
                     [MODULENAME]: {
                         [FLAGS.COLORID]: colorId

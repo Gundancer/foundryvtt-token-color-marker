@@ -200,7 +200,7 @@ export class TokenColorMarker {
                 id: colorId, 
                 name: (color ? color.label : colorId),
                 lable: (color ? color.label : colorId), 
-                img: IconManager.getImagePath(color.hex) 
+                img: IconManager.getImagePath(color) 
             });
 
         // toggle the marker effect

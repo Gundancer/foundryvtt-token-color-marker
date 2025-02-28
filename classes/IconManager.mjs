@@ -10,29 +10,39 @@ export const FILEEXTENTION = "webp";
 // A class to create the color marker icon
 export class IconManager {
 
-    static getImagePath(hexColor) {
-        return `${this.getDirectoryPath()}/${this.getFileName(hexColor)}`;
+    static getImagePath(icon) {
+        return `${this.getDirectoryPath()}/${this.getFileName(icon)}`;
     }
 
     static getDirectoryPath() {
         return `${MODULENAME}`;
     }
 
-    static getFileName(hexColor) {
-        return `${hexColor.split('#')[1]}.${FILEEXTENTION}`;
+    static getFileName(icon) {
+        return `${icon.id}.${FILEEXTENTION}`;
     }
 
-    static createNewColorId() {
-        return foundry.utils.randomID(16);
+    // generate a random id for this new Color and populate
+    static createIcon() {
+        const newId = foundry.utils.randomID(16);
+
+        const newIcon = {
+            hex: this.getRandomColor(),
+            label: game.i18n.localize(`${MODULENAME}.color-manager-menu.new-color-label`),
+            id: newId
+            //filePath: `${this.getDirectoryPath()}/${newId}.${FILEEXTENTION}`
+        }
+
+        return newIcon;
     }
 
-    static async saveIconImage(hexColor) {
+    static async saveIconImage(icon, overwrite = true) {
 
         var directory = await FilePicker.browse(activeSource, this.getDirectoryPath());
-        var iconExists = directory.files.includes(this.getImagePath(hexColor));
+        var iconExists = directory.files.includes(this.getImagePath(icon));
 
         // if the icon does not alreeady exist, create it.
-        if(!iconExists)
+        if(overwrite || !iconExists)
         {
             // create a canvas to draw the icon
             var canvas = document.createElement("canvas");
@@ -42,18 +52,18 @@ export class IconManager {
             var context = canvas.getContext("2d");
 
             // draw a filed in rounded square of the hex color
-            this.drawRoundRect(context, 15, 15, 70, 70, 25, hexColor); 
+            this.drawRoundRect(context, 15, 15, 70, 70, 25, icon.hex); 
 
             // extract as new image blob
             canvas.toBlob((blob) => { 
-                return this.saveFile(blob, hexColor); 
+                return this.saveFile(blob, icon); 
             }, `image/${FILEEXTENTION}`);
         }
     }
 
-    static async saveFile(blob, hexColor) {
+    static async saveFile(blob, icon) {
         // create new file 
-        let file = new File([blob], this.getFileName(hexColor), { type: blob.type });
+        let file = new File([blob], this.getFileName(icon), { type: blob.type });
     
         const result = await FilePicker.upload(activeSource, this.getDirectoryPath(), file, {}, { notify: false });
     
@@ -70,6 +80,16 @@ export class IconManager {
                 throw error;
             } 
         }
+    }
+
+    // generates a random color for the new color marker.
+    static getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
     }
 
     // Draw a rounded rectangle
