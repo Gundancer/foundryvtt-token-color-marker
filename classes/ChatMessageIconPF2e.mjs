@@ -1,5 +1,6 @@
 import { Settings } from "./Settings.mjs";
 import { FLAGS, MODULENAME } from "./TokenColorMarker.mjs";
+import { IconManager } from "./IconManager.mjs";
 
 // A class that adds the color marker to the "target" in the chat message
 // This only works for pf2e
