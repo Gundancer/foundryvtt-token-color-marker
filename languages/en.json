@@ -39,6 +39,8 @@
             "name-header": "Name",
             "hex-header": "Hex",
             "color-picker-header": "Color Picker",
+            "text-header": "Text",
+            "text-color-header": "Text Color",
             "add-color": "Add Color",
             "delete-color": "Delete Color",
             "move-up": "Move Up",

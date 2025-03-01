@@ -39,7 +39,9 @@ export class IconManager {
         const newIcon = {
             hex: this.getRandomColor(),
             label: game.i18n.localize(`${MODULENAME}.color-manager-menu.new-color-label`),
-            id: newId
+            id: newId,
+            text: "",
+            textColor: "#000000"
         }
 
         return newIcon;
@@ -60,8 +62,19 @@ export class IconManager {
             canvas.height = HEIGHT;
             var context = canvas.getContext("2d");
 
+            const x = 10;
+            const y = 10;
+            const width = 80;
+            const height = 80;
+            // because of the rounded corners, the width of "W" is outside the background
+            const Wfactor = 7;
+
             // draw a filed in rounded square of the hex color
-            this.drawRoundRect(context, 15, 15, 70, 70, 25, icon.hex); 
+            this.drawRoundRect(context, x, y, width, height, 25, icon.hex); 
+
+            if(icon.text) {
+                this.drawText(context, width-Wfactor, icon.text, icon.textColor);
+            }
 
             // extract as new image blob
             canvas.toBlob((blob) => { 
@@ -121,5 +134,26 @@ export class IconManager {
       context.fillStyle=hexColor;
       context.fill();
       context.stroke();
+    }
+
+    // Draw text
+    static drawText(context, width, text, hexColor)
+    {
+        context.fillStyle = hexColor;
+        const fontName = "arial";
+
+        let fontSize = 100;
+        
+        do {
+            context.font = `bold ${fontSize}px ${fontName}`;
+            fontSize--;
+        } while (context.measureText(text).width > width)
+
+        const measure = context.measureText(text);
+
+        const xPos = 0 + (WIDTH/ 2) + ((measure.actualBoundingBoxLeft - measure.actualBoundingBoxRight) / 2);
+        const yPos = 0 + (HEIGHT / 2) + ((measure.actualBoundingBoxAscent - measure.actualBoundingBoxDescent) / 2);
+
+        context.fillText(text , xPos, yPos);
     }
 }
