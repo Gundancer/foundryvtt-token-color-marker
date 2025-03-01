@@ -10,8 +10,18 @@ export const FILEEXTENTION = "webp";
 // A class to create the color marker icon
 export class IconManager {
 
-    static getImagePath(icon) {
+    static cashBuster = 1;
+
+    static refreshImages() {
+        this.cashBuster++;
+    }
+
+    static getFilePath(icon) {
         return `${this.getDirectoryPath()}/${this.getFileName(icon)}`;
+    }
+
+    static getImagePath(icon) {
+        return `${this.getFilePath(icon)}?v=${this.cashBuster}`;
     }
 
     static getDirectoryPath() {
@@ -30,7 +40,6 @@ export class IconManager {
             hex: this.getRandomColor(),
             label: game.i18n.localize(`${MODULENAME}.color-manager-menu.new-color-label`),
             id: newId
-            //filePath: `${this.getDirectoryPath()}/${newId}.${FILEEXTENTION}`
         }
 
         return newIcon;
@@ -39,7 +48,7 @@ export class IconManager {
     static async saveIconImage(icon, overwrite = true) {
 
         var directory = await FilePicker.browse(activeSource, this.getDirectoryPath());
-        var iconExists = directory.files.includes(this.getImagePath(icon));
+        var iconExists = directory.files.includes(this.getFilePath(icon));
 
         // if the icon does not alreeady exist, create it.
         if(overwrite || !iconExists)

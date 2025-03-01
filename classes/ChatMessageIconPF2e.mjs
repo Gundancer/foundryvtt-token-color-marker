@@ -18,7 +18,7 @@ export class ChatMessageIconPF2e {
     
                 markers?.forEach(marker => {
                     var color = colors.find(c => c.id === marker.getFlag(MODULENAME, FLAGS.COLORID));
-                    icons += `<i class="fa-solid fa-square-small ${MODULENAME}-icon-chat" style="color: ${color.hex};"></i>`
+                    icons += `<img class="${MODULENAME}-icon-chat" src=${IconManager.getImagePath(color)} >`
                 });
     
                 if(icons)

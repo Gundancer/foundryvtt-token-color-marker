@@ -27,7 +27,7 @@ export class ColorPalatteSettings extends FormApplication {
       return game.settings.get(MODULENAME, Settings.COLORS);
     }
 
-    // create a color and add it tothe settings color list
+    // create a color and add it to the settings color list
     static async createColor() {
         const newIcon = IconManager.createIcon();
     
@@ -48,6 +48,8 @@ export class ColorPalatteSettings extends FormApplication {
         
         // update the color
         relevantColor[field] = value;
+
+        IconManager.refreshImages();
 
         // update the database with the updated Color list
         await game.settings.set(MODULENAME, Settings.COLORS, colors);

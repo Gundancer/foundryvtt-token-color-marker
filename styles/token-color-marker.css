@@ -51,6 +51,11 @@
     border-radius: 5px;
 }
 
+.token-color-marker > img {
+    margin: 0px !important;
+    opacity: 1 !important;
+}
+
 .token-color-marker-icon {
     font-size: 24px; 
     display: block;
@@ -59,10 +64,10 @@
 /***** Chat Message *****/
 
 .token-color-marker-icon-chat {
-    font-size: 14px; 
     display: inline;
-    padding: 2px;
     vertical-align: bottom;
+    width: 14px;
+    border: none;
 }
 
 /***** Color Settings Menu *****/
