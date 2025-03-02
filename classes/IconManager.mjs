@@ -142,7 +142,7 @@ export class IconManager {
         context.fillStyle = hexColor;
         const fontName = "arial";
 
-        let fontSize = 90;
+        let fontSize = 70;
         
         do {
             context.font = `bold ${fontSize}px ${fontName}`;
