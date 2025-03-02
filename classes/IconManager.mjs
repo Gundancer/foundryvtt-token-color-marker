@@ -67,10 +67,10 @@ export class IconManager {
             const width = 80;
             const height = 80;
             // because of the rounded corners, the width of "W" is outside the background
-            const Wfactor = 7;
+            const Wfactor = 10;
 
             // draw a filed in rounded square of the hex color
-            this.drawRoundRect(context, x, y, width, height, 25, icon.hex); 
+            this.drawRoundRect(context, x, y, width, height, 30, icon.hex); 
 
             if(icon.text) {
                 this.drawText(context, width-Wfactor, icon.text, icon.textColor);
@@ -142,7 +142,7 @@ export class IconManager {
         context.fillStyle = hexColor;
         const fontName = "arial";
 
-        let fontSize = 100;
+        let fontSize = 90;
         
         do {
             context.font = `bold ${fontSize}px ${fontName}`;
