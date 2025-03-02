@@ -86,6 +86,7 @@
 
 .token-color-marker-palatte-settings > li .order-col{
     max-width: 12px;
+    visibility: hidden;
 }
 
 .token-color-marker-palatte-settings > li .order-col-button-group{
@@ -111,6 +112,7 @@
 
 .token-color-marker-palatte-settings > li .delete-col{
     max-width: 12px;
+    visibility: hidden;
 }
 
 .token-color-marker-palatte-settings .header {

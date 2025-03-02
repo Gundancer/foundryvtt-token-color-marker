@@ -37,8 +37,8 @@
         },
         "color-manager-menu":{
             "name-header": "Name",
-            "hex-header": "Hex",
-            "color-picker-header": "Color Picker",
+            "hex-header": "Hex Value",
+            "color-picker-header": "Color",
             "text-header": "Text",
             "text-color-header": "Text Color",
             "add-color": "Add Color",
