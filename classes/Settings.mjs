@@ -20,9 +20,9 @@ export class Settings {
       let defaultColors = [];
 
       for (const defaultColor of DEFAULT_COLORS) {
-        let label = game.i18n.localize(`${MODULENAME}.default-setting-colors.${defaultColor}`);
-        let colorId = defaultColor.split('#')[1];
-        defaultColors.push( { hex: `${defaultColor}`, label: label, id: colorId });
+        let icon = IconManager.createIcon(defaultColor);
+        icon.label = game.i18n.localize(`${MODULENAME}.default-setting-colors.${defaultColor}`);
+        defaultColors.push(icon);
       };
 
       return defaultColors;

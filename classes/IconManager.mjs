@@ -33,13 +33,11 @@ export class IconManager {
     }
 
     // generate a random id for this new Color and populate
-    static createIcon() {
-        const newId = foundry.utils.randomID(16);
-
+    static createIcon(hex = this.getRandomColor()) {
         const newIcon = {
-            hex: this.getRandomColor(),
+            hex: hex,
             label: game.i18n.localize(`${MODULENAME}.color-manager-menu.new-color-label`),
-            id: newId,
+            id: foundry.utils.randomID(16),
             text: "",
             textColor: "#000000"
         }
@@ -106,7 +104,7 @@ export class IconManager {
 
     // generates a random color for the new color marker.
     static getRandomColor() {
-        var letters = '0123456789ABCDEF';
+        var letters = '0123456789abcdef';
         var color = '#';
         for (var i = 0; i < 6; i++) {
             color += letters[Math.floor(Math.random() * 16)];
