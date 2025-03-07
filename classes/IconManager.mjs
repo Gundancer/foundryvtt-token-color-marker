@@ -1,4 +1,5 @@
 import { MODULENAME } from "./TokenColorMarker.mjs";
+import { Settings } from "./Settings.mjs";
 
 const WIDTH = 100;
 const HEIGHT = 100;
@@ -140,7 +141,7 @@ export class IconManager {
         context.fillStyle = hexColor;
         const fontName = "arial";
 
-        let fontSize = 70;
+        let fontSize = game.settings.get(MODULENAME, Settings.MAX_FONT_SIZE_SETTING);
         
         do {
             context.font = `bold ${fontSize}px ${fontName}`;
