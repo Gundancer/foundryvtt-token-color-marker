@@ -33,12 +33,18 @@
             "enable-icon-in-chat-message": {
                 "Name": "Show Color Markers In Chat Message",
                 "Hint": "Shows the token color markers by the tarket's name in the chat message."
-            }
+            },
+            "max-font-size": {
+                "Name": "Max Pixel Size Of Marker Text",
+                "Hint": "This is the max pixel size for text added to a marker. Requires a refresh to update current marker text size."
+            } 
         },
         "color-manager-menu":{
             "name-header": "Name",
-            "hex-header": "Hex",
-            "color-picker-header": "Color Picker",
+            "hex-header": "Hex Value",
+            "color-picker-header": "Color",
+            "text-header": "Text",
+            "text-color-header": "Text Color",
             "add-color": "Add Color",
             "delete-color": "Delete Color",
             "move-up": "Move Up",

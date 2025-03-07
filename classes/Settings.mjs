@@ -20,9 +20,9 @@ export class Settings {
       let defaultColors = [];
 
       for (const defaultColor of DEFAULT_COLORS) {
-        let label = game.i18n.localize(`${MODULENAME}.default-setting-colors.${defaultColor}`);
-        let colorId = defaultColor.split('#')[1];
-        defaultColors.push( { hex: `${defaultColor}`, label: label, id: colorId });
+        let icon = IconManager.createIcon(defaultColor);
+        icon.label = game.i18n.localize(`${MODULENAME}.default-setting-colors.${defaultColor}`);
+        defaultColors.push(icon);
       };
 
       return defaultColors;
@@ -32,6 +32,7 @@ export class Settings {
     static ENABLE_BUTTON_GM_ONLY_SETTING = 'enable-button-for-gm-only';
     static ENABLE_MONOCHROME_ICON_SETTING = 'enable-mono-Icon';
     static ENABLE_ICON_IN_CHAT_MESSAGE_SETTING = 'enable-icon-in-chat-message';
+    static MAX_FONT_SIZE_SETTING = 'max-font-size';
 
     static COLORS = 'colors';
 
@@ -97,6 +98,18 @@ export class Settings {
           hint: `${MODULENAME}.settings.${this.ENABLE_ICON_IN_CHAT_MESSAGE_SETTING}.Hint`,
         });
       }
+
+      // register the setting to toggle the rainbow or monochrome icon
+      game.settings.register(MODULENAME, this.MAX_FONT_SIZE_SETTING, {
+        name: `${MODULENAME}.settings.${this.MAX_FONT_SIZE_SETTING}.Name`,
+        default: "70",
+        type: String,
+        scope: 'world',
+        config: true,
+        choices: [ {value: "80"}, {value: "75"},{ value: "70"},{ value: "65"},{ value: "60"} ],
+        hint: `${MODULENAME}.settings.${this.MAX_FONT_SIZE_SETTING}.Hint`,
+      });
+
     }
 
     static createImagesforSettings(){

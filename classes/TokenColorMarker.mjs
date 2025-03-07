@@ -89,7 +89,7 @@ export class TokenColorMarker {
             let activeColor = this.isColorActiveOnToken(tokenHUD, color.id)
             markers = markers.concat(
                 `<div class="${MODULENAME} ${activeColor ? 'active' : ''}" data-color-id="${color.id}" id="${MODULENAME}-${color.id}" title="${color.label}">
-                    <i class="fa-solid fa-square-small ${MODULENAME}-icon" style="color: ${color.hex};"></i>
+                    <img class="${MODULENAME}-icon" src=${IconManager.getImagePath(color)} >
                  </div>`
             );
         });
@@ -199,7 +199,7 @@ export class TokenColorMarker {
             { 
                 id: colorId, 
                 name: (color ? color.label : colorId),
-                lable: (color ? color.label : colorId), 
+                label: (color ? color.label : colorId), 
                 img: IconManager.getImagePath(color) 
             });
 

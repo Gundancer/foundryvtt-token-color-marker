@@ -2,11 +2,14 @@
   <ul class="token-color-marker-palatte-settings flexcol">
     {{#if colors}}
     <li class="flexrow header">
-      <div class="order-col"></div>
+      <div class="order-col">_</div>
       <div class="name-col">{{localize "token-color-marker.color-manager-menu.name-header"}}</div>
-      <div class="hex-col">{{localize "token-color-marker.color-manager-menu.hex-header"}}</div>
       <div class="hex-col">{{localize "token-color-marker.color-manager-menu.color-picker-header"}}</div>
-      <div class="delete-col"></div>
+      <div class="hex-col">{{localize "token-color-marker.color-manager-menu.hex-header"}}</div>
+      <div class="text-col">{{localize "token-color-marker.color-manager-menu.text-header"}}</div>
+      <div class="hex-col">{{localize "token-color-marker.color-manager-menu.text-color-header"}}</div>
+      <div class="hex-col">{{localize "token-color-marker.color-manager-menu.hex-header"}}</div>
+      <div class="delete-col">_</div>
     </li>
     {{/if}}
     {{#each colors}}
@@ -20,8 +23,11 @@
         </button> 
       </div>
       <input type="text" name="{{id}}.label" value="{{label}}" class="name-col"/>
-      <input type="text" name="{{id}}.hex" value="{{hex}}" class="hex-col"/>
       <input type="color" name="{{id}}.hex" value="{{hex}}" class="hex-col"/>
+      <input type="text" name="{{id}}.hex" value="{{hex}}" class="hex-col"/>
+      <input type="text" name="{{id}}.text" value="{{text}}" class="text-col" maxlength="3"/>
+      <input type="color" name="{{id}}.textColor" value="{{textColor}}" class="hex-col" />
+      <input type="text" name="{{id}}.textColor" value="{{textColor}}" class="hex-col"/>
       <button type="button" title="{{localize "token-color-marker.color-manager-menu.delete-color"}}" data-action="delete" class="flex0 token-color-marker-color-icon-button">
         <i class="fas fa-trash"></i>
       </button>
