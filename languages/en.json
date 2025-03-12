@@ -49,7 +49,9 @@
             "delete-color": "Delete Color",
             "move-up": "Move Up",
             "move-down": "Move Down",
-            "new-color-label": "New Color"
+            "new-color-label": "New Color",
+            "add-image": "Add Image",
+            "new-image-label": "New Image"
         },
         "confirms": {
             "deleteConfirm": {
