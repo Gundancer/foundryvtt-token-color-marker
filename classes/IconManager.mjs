@@ -18,11 +18,19 @@ export class IconManager {
     }
 
     static getFilePath(icon) {
+
+        if(icon.isCustom) {
+            return icon.filePath;
+        }
+
         return `${this.getDirectoryPath()}/${this.getFileName(icon)}`;
     }
 
     static getImagePath(icon) {
-        return `${this.getFilePath(icon)}?v=${this.cashBuster}`;
+        const filepath = this.getFilePath(icon);
+        if(filepath) {
+            return `${filepath}?v=${this.cashBuster}`;
+        }
     }
 
     static getDirectoryPath() {
@@ -44,6 +52,17 @@ export class IconManager {
         }
 
         return newIcon;
+    }
+
+    static createCustomImage(hex = this.getRandomColor()) {
+        const newCustomImage = {
+            isCustom: true,
+            label: game.i18n.localize(`${MODULENAME}.color-manager-menu.new-image-label`),
+            id: foundry.utils.randomID(16),
+            filePath: ""
+        }
+
+        return newCustomImage;
     }
 
     static async saveIconImage(icon, overwrite = true) {

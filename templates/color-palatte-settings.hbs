@@ -23,17 +23,25 @@
         </button> 
       </div>
       <input type="text" name="{{id}}.label" value="{{label}}" class="name-col"/>
-      <input type="color" name="{{id}}.hex" value="{{hex}}" class="hex-col"/>
-      <input type="text" name="{{id}}.hex" value="{{hex}}" class="hex-col"/>
-      <input type="text" name="{{id}}.text" value="{{text}}" class="text-col" maxlength="3"/>
-      <input type="color" name="{{id}}.textColor" value="{{textColor}}" class="hex-col" />
-      <input type="text" name="{{id}}.textColor" value="{{textColor}}" class="hex-col"/>
-      <button type="button" title="{{localize "token-color-marker.color-manager-menu.delete-color"}}" data-action="delete" class="flex0 token-color-marker-color-icon-button">
+      {{#if isCustom}}
+          <file-picker type="file" name="{{id}}.filePath" value="{{filePath}}" class="custom-file-picker"></file-picker>
+      {{else}}
+        <input type="color" name="{{id}}.hex" value="{{hex}}" class="hex-col"/>
+        <input type="text" name="{{id}}.hex" value="{{hex}}" class="hex-col"/>
+        <input type="text" name="{{id}}.text" value="{{text}}" class="text-col" maxlength="3"/>
+        <input type="color" name="{{id}}.textColor" value="{{textColor}}" class="hex-col" />
+        <input type="text" name="{{id}}.textColor" value="{{textColor}}" class="hex-col"/>
+      {{/if}}
+      <button type="button" title="{{localize "token-color-marker.color-manager-menu.delete-color"}}" data-action="delete" class="token-color-marker-color-icon-button">
         <i class="fas fa-trash"></i>
       </button>
     </li>
     {{/each}}
   </ul>
 
-  <button type="button" data-action="create"><i class="fas fa-plus"></i> {{localize "token-color-marker.color-manager-menu.add-color"}}</button>
+  <div class="flexrow">
+    <button type="button" data-action="create"><i class="fas fa-plus"></i> {{localize "token-color-marker.color-manager-menu.add-color"}}</button>
+    <button type="button" data-action="add-image"><i class="fas fa-plus"></i> {{localize "token-color-marker.color-manager-menu.add-image"}}</button>
+  </div>
+
 </form>

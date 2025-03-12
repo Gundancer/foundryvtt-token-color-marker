@@ -117,7 +117,9 @@ export class Settings {
 
       let colors = game.settings.get(MODULENAME, Settings.COLORS);
       colors.forEach(color => {
-        IconManager.saveIconImage(color, false);
+        if(!color.isCustom) {
+          IconManager.saveIconImage(color, false);
+        }
       });
     }
 }

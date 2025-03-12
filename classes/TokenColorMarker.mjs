@@ -87,11 +87,14 @@ export class TokenColorMarker {
         colors.forEach(color => {
             // Check if the effects is already on the token
             let activeColor = this.isColorActiveOnToken(tokenHUD, color.id)
-            markers = markers.concat(
-                `<div class="${MODULENAME} ${activeColor ? 'active' : ''}" data-color-id="${color.id}" id="${MODULENAME}-${color.id}" title="${color.label}">
-                    <img class="${MODULENAME}-icon" src=${IconManager.getImagePath(color)} >
-                 </div>`
-            );
+            const filepath = IconManager.getImagePath(color);
+            if(filepath){
+                markers = markers.concat(
+                    `<div class="${MODULENAME} ${activeColor ? 'active' : ''}" data-color-id="${color.id}" id="${MODULENAME}-${color.id}" title="${color.label}">
+                        <img class="${MODULENAME}-icon" src=${filepath} >
+                    </div>`
+                );
+            }
         });
 
         // If there is a deleted marker, a trash icon will be visible on the palette to remove them.

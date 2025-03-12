@@ -40,6 +40,16 @@ export class ColorPalatteSettings extends FormApplication {
         await IconManager.saveIconImage(newIcon);
     }
 
+    // create a color and add it to the settings color list
+    static async addImage() {
+      const newIcon = IconManager.createCustomImage();
+
+      let colors = this.getColors().concat(newIcon);
+
+      // update the database with the new Colors
+      await game.settings.set(MODULENAME, Settings.COLORS, colors);
+    }
+
     static async updateColor(colorId, field, value) {
         // get the color list 
         let colors = this.getColors();
@@ -54,8 +64,10 @@ export class ColorPalatteSettings extends FormApplication {
         // update the database with the updated Color list
         await game.settings.set(MODULENAME, Settings.COLORS, colors);
 
-        // update the image file
-        await IconManager.saveIconImage(relevantColor);
+        if(!relevantColor.isCustom) {
+          // update the image file
+          await IconManager.saveIconImage(relevantColor);
+        }
     }
     
     static async deleteColor(colorId) {
@@ -97,6 +109,12 @@ export class ColorPalatteSettings extends FormApplication {
           break;
         }
   
+        case 'add-image': {
+          await ColorPalatteSettings.addImage();
+          this.render();
+          break;
+        }
+
         case 'delete': {
             const confirmed = await Dialog.confirm({
               title: game.i18n.localize(`${MODULENAME}.confirms.deleteConfirm.Title`),

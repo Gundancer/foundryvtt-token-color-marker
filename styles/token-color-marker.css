@@ -115,6 +115,16 @@
     visibility: hidden;
 }
 
+.token-color-marker-palatte-settings > li .custom-file-picker{
+    flex: 5;
+    min-width: 353px;
+}
+
+.token-color-marker-palatte-settings > li .custom-file-picker > button{
+    line-height: var(--form-field-height);
+    border: 1px solid var(--color-border-light-tertiary);
+}
+
 .token-color-marker-palatte-settings .header {
     font-weight: bold;
 }
