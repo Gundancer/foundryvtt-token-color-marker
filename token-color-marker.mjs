@@ -18,6 +18,7 @@ Hooks.on('init', () => {
 Hooks.on('ready', () => {
     // only create if the user is the GM. players dont have file creation by default
     if(game.user.isGM) {
+        Settings.handleCompatibilityFlag();
         Settings.createImagesforSettings();
     }
     

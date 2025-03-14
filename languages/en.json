@@ -10,7 +10,11 @@
             "#0000ff": "Blue",
             "#800080": "Purple",
             "#ffffff": "White",
-            "#000000": "Black"
+            "#000000": "Black",
+            "Number1": "Number 1",
+            "Number2": "Number 2",
+            "ABC": "ABC",
+            "Rainbow": "Rainbow"
         },
         "settings": {
             "enable-button": {
