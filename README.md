@@ -33,6 +33,10 @@ The "My Color Settings" button in module settings will open the color customizat
 
 ![Token Color Marker](README-img/CustomColors.jpg)
 
+Text can now be added to a color marker up to a maximum of 3 characters. The text color can be customized. An image can also be added as a marker by selecting the "Add Image" button. The up and down arrows can be used to change the order of the color markers on the palette.
+
+![Token Color Marker](README-img/CustomColorsTextImage.jpg)
+
 ## PF2e system Only
 There is a setting to add the icon in the target section of the chat messages. this is only availible on pf2e system
 
