@@ -28,9 +28,10 @@ export class IconManager {
 
     static getImagePath(icon) {
         const filepath = this.getFilePath(icon);
-        if(filepath) {
+        if(filepath && !icon.isCustom) {
             return `${filepath}?v=${this.cashBuster}`;
         }
+        return filepath;
     }
 
     static getDirectoryPath() {
@@ -95,10 +96,17 @@ export class IconManager {
             }
 
             // extract as new image blob
-            canvas.toBlob((blob) => { 
-                return this.saveFile(blob, icon); 
-            }, `image/${FILEEXTENTION}`);
+            await this.getBlobFromCanvas(canvas, icon);
         }
+    }
+
+    static async getBlobFromCanvas(canvas, icon) {
+        return new Promise((resolve) => {
+          canvas.toBlob((blob) => {
+                this.saveFile(blob, icon)
+                resolve(blob);
+            }, `image/${FILEEXTENTION}`);
+        });
     }
 
     static async saveFile(blob, icon) {

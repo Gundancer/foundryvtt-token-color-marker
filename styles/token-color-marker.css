@@ -76,7 +76,7 @@
     padding: 0;
     margin-top: 0;
     gap: 5px;
-    min-width: 600px;
+    min-width: 650px;
 }
   
 .token-color-marker-palatte-settings > li {
@@ -117,7 +117,7 @@
 
 .token-color-marker-palatte-settings > li .custom-file-picker{
     flex: 5;
-    min-width: 353px;
+    max-width: 373px;
 }
 
 .token-color-marker-palatte-settings > li .custom-file-picker > button{
@@ -127,6 +127,17 @@
 
 .token-color-marker-palatte-settings .header {
     font-weight: bold;
+}
+
+.token-color-marker-palatte-settings > li .preview-col {
+    min-width: 50px;
+    max-width: 50px;
+    text-align: center;
+}
+
+.token-color-marker-palatte-settings > li .preview-col > img {
+    height: 27px;
+    width: 27px;
 }
 
 .token-color-marker-color-icon-button {

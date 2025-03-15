@@ -9,6 +9,7 @@
       <div class="text-col">{{localize "token-color-marker.color-manager-menu.text-header"}}</div>
       <div class="hex-col">{{localize "token-color-marker.color-manager-menu.text-color-header"}}</div>
       <div class="hex-col">{{localize "token-color-marker.color-manager-menu.hex-header"}}</div>
+      <div class="preview-col">Preview</div>
       <div class="delete-col">_</div>
     </li>
     {{/if}}
@@ -24,7 +25,7 @@
       </div>
       <input type="text" name="{{id}}.label" value="{{label}}" class="name-col"/>
       {{#if isCustom}}
-          <file-picker type="file" name="{{id}}.filePath" value="{{filePath}}" class="custom-file-picker"></file-picker>
+          <file-picker type="image" name="{{id}}.filePath" value="{{filePath}}" class="custom-file-picker"></file-picker>
       {{else}}
         <input type="color" name="{{id}}.hex" value="{{hex}}" class="hex-col"/>
         <input type="text" name="{{id}}.hex" value="{{hex}}" class="hex-col"/>
@@ -32,7 +33,12 @@
         <input type="color" name="{{id}}.textColor" value="{{textColor}}" class="hex-col" />
         <input type="text" name="{{id}}.textColor" value="{{textColor}}" class="hex-col"/>
       {{/if}}
-      <button type="button" title="{{localize "token-color-marker.color-manager-menu.delete-color"}}" data-action="delete" class="token-color-marker-color-icon-button">
+      <div class="flex0 preview-col">
+        {{#if filePath}}
+        <img name="{{id}}.preview" src="{{filePath}}" class="flex0">
+        {{/if}}
+      </div>
+      <button type="button" title="{{localize "token-color-marker.color-manager-menu.delete-color"}}" data-action="delete" class="flex0 token-color-marker-color-icon-button">
         <i class="fas fa-trash"></i>
       </button>
     </li>

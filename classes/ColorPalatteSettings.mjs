@@ -154,8 +154,19 @@ export class ColorPalatteSettings extends FormApplication {
   
     // gets the color list to display on the form
     getData() {
+      const colors = ColorPalatteSettings.getColors();
+
+      // make a deep copy to avoid adding filepath to colors in settings
+      var displayIcons = JSON.parse(JSON.stringify(colors));
+
+      displayIcons.forEach(displayIcon => {
+        if(!displayIcon.isCustom) {
+          displayIcon.filePath = IconManager.getImagePath(displayIcon);
+        }
+      });
+
       return {
-        colors: ColorPalatteSettings.getColors()
+        colors: displayIcons
       }
     }
   
