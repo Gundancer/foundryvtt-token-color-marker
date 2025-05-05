@@ -193,16 +193,16 @@ export class TokenColorMarker {
             const tokens = canvas.tokens.controlled.map(t => t.document);
 
             tokens.forEach(token => {
-                this.toggleMarkerToToken(token.actor, colorId, data);
+                this.toggleMarkerToToken(token.actor, colorId, data, tokenHUD);
             });
         }
         else
         {
-            this.toggleMarkerToToken(tokenHUD.actor, colorId, data);
+            this.toggleMarkerToToken(tokenHUD.actor, colorId, data, tokenHUD);
         }
     }
 
-    static async toggleMarkerToToken(actor, colorId, data) {
+    static async toggleMarkerToToken(actor, colorId, data, tokenHUD) {
         
         let colors = game.settings.get(MODULENAME, Settings.COLORS);
         let color = colors.find(x => x.id === colorId);
