@@ -49,12 +49,12 @@ export class TokenColorMarker {
 
             // register click event listener for token color marker palette icons
             palette.on('click', `.${MODULENAME}`, (event) => {
-                this.clickMarkerPaletteIcons(event, app, data);
+                this.clickMarkerPaletteIcons(event, app, data, event.shiftKey);
             });
 
             // register right click event listener for token color marker palette icons
             palette.on('contextmenu', `.${MODULENAME}`, (event) => {
-                this.clickMarkerPaletteIcons(event, app, data);
+                this.clickMarkerPaletteIcons(event, app, data, event.shiftKey);
             });
 
             // register click event listener for effects button
@@ -174,25 +174,35 @@ export class TokenColorMarker {
         palette.classList.remove("active");
 	}
 
-    static async clickMarkerPaletteIcons(event, app, data)
+    static async clickMarkerPaletteIcons(event, app, data, shiftKey)
     {
         event.preventDefault();
         event.stopPropagation();
 
         // gets the img that was clicked
         let img = event.currentTarget;
-        await this.clickMarkerIcon(app, img.dataset.colorId, data);
+        await this.clickMarkerIcon(app, img.dataset.colorId, data, shiftKey);
     }
 
-    static async clickMarkerIcon(tokenHUD, colorId, data) {
+    static async clickMarkerIcon(tokenHUD, colorId, data, shiftKey) {
         // set the token color marker menu button as active when UI refreshes.
         // This is a one time use flag to keep the token color marker "control-icon" active
         tokenHUD[FLAGS.COLORMARKERCLASS] = "active";
 
-        this.toggleMarkerToToken(tokenHUD, colorId, data);
+        if(shiftKey) { // toggle color for all selected tokens when using shift click
+            const tokens = canvas.tokens.controlled.map(t => t.document);
+
+            tokens.forEach(token => {
+                this.toggleMarkerToToken(token.actor, colorId, data);
+            });
+        }
+        else
+        {
+            this.toggleMarkerToToken(tokenHUD.actor, colorId, data);
+        }
     }
 
-    static async toggleMarkerToToken(tokenHUD, colorId, data) {
+    static async toggleMarkerToToken(actor, colorId, data) {
         
         let colors = game.settings.get(MODULENAME, Settings.COLORS);
         let color = colors.find(x => x.id === colorId);
@@ -207,7 +217,7 @@ export class TokenColorMarker {
             });
 
         // toggle the marker effect
-        await tokenHUD.actor.toggleStatusEffect(colorId, {overlay: false});
+        await actor.toggleStatusEffect(colorId, {overlay: false});
 
         const index = CONFIG.statusEffects.findIndex((obj) => obj.id === colorId);
         CONFIG.statusEffects.splice(index, 1);
