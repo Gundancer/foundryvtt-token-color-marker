@@ -38,14 +38,14 @@ export class TokenColorMarker {
             }
 
             // Add the UI
-            this.addTokenColorMarkerUI(app, html, data);
+            this.addTokenColorMarkerUI(app, $(html), data);
 
             // register click event listener for token color marker button
-            html.on('click', `.control-icon[data-action="${MODULENAME}"]`, (event) => {
+            $(html).on('click', `.control-icon[data-action="${MODULENAME}"]`, (event) => {
                 this.activateTokenColorMarkerButton($(event.currentTarget), app);
             });
 
-            let palette = html.find(`.${MODULENAME}-palette`);
+            let palette = $(html).find(`.${MODULENAME}-palette`);
 
             // register click event listener for token color marker palette icons
             palette.on('click', `.${MODULENAME}`, (event) => {
@@ -58,7 +58,7 @@ export class TokenColorMarker {
             });
 
             // register click event listener for effects button
-            html.on('click', '.control-icon[data-action="effects"]', (event) => {
+            $(html).on('click', '.control-icon[data-action="effects"]', (event) => {
                 this.deactivateTokenColorMarkerButton($(event.currentTarget));
             });
 
