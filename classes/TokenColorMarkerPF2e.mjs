@@ -20,7 +20,7 @@ export class TokenColorMarkerPF2e extends TokenColorMarker {
         });
     }
 
-    static async toggleMarkerToToken(actor, colorId, data, tokenHUD) 
+    static async toggleMarkerToToken(actor, colorId, data) 
     {
         const existing = actor.items.find(e => e.getFlag(MODULENAME, FLAGS.COLORID) === colorId);
 
@@ -53,9 +53,6 @@ export class TokenColorMarkerPF2e extends TokenColorMarker {
             // toggle the marker effect
             await actor.createEmbeddedDocuments("Item", effectObject);
         }
-        
-        // setting to active to prevent the color marker palette from closing when slecting a color on a NPC actor
-        tokenHUD[FLAGS.COLORMARKERCLASS] = "active";
     }
 
     static isColorActiveOnToken(tokenHUD, colorId) {

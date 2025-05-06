@@ -72,6 +72,12 @@ export class TokenColorMarker {
                 this.clickRemoveDeletedColorMarkers(event, app, data);
             });
         });
+
+        Hooks.on('closeTokenHUD', (tokenHUD, html, data) => {
+            // This is used to determine if token color marker "control-icon" is active when the TokenHUD gets refreshed.
+            // clear the flag when closing the tokenHUD
+            tokenHUD[FLAGS.COLORMARKERCLASS] = "";
+        });
     }
 
     static addTokenColorMarkerUI(tokenHUD, html, data) {
@@ -101,9 +107,8 @@ export class TokenColorMarker {
         let showTrash = this.hasDeletedMarker(tokenHUD, colors);
 
         // check if token color marker "control-icon" is active when the TokenHUD gets refreshed.
-        // the refresh happens during "ToggleEffect". delete the flag after one time use.
+        // the refresh happens during "ToggleEffect".
         let active = tokenHUD[FLAGS.COLORMARKERCLASS];
-        tokenHUD[FLAGS.COLORMARKERCLASS] = "";
 
         // create localized tooltip for button
         const buttonTooltip = game.i18n.localize(`${MODULENAME}.button-title`);
@@ -193,16 +198,16 @@ export class TokenColorMarker {
             const tokens = canvas.tokens.controlled.map(t => t.document);
 
             tokens.forEach(token => {
-                this.toggleMarkerToToken(token.actor, colorId, data, tokenHUD);
+                this.toggleMarkerToToken(token.actor, colorId, data);
             });
         }
         else
         {
-            this.toggleMarkerToToken(tokenHUD.actor, colorId, data, tokenHUD);
+            this.toggleMarkerToToken(tokenHUD.actor, colorId, data);
         }
     }
 
-    static async toggleMarkerToToken(actor, colorId, data, tokenHUD) {
+    static async toggleMarkerToToken(actor, colorId, data) {
         
         let colors = game.settings.get(MODULENAME, Settings.COLORS);
         let color = colors.find(x => x.id === colorId);
