@@ -102,8 +102,8 @@ export class IconManager {
 
     static async getBlobFromCanvas(canvas, icon) {
         return new Promise((resolve) => {
-          canvas.toBlob((blob) => {
-                this.saveFile(blob, icon)
+          canvas.toBlob(async (blob) => {
+                await this.saveFile(blob, icon);
                 resolve(blob);
             }, `image/${FILEEXTENTION}`);
         });
