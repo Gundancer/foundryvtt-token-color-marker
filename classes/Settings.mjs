@@ -68,6 +68,9 @@ export class Settings {
     static ENABLE_ICON_IN_CHAT_MESSAGE_SETTING = 'enable-icon-in-chat-message';
     static MAX_FONT_SIZE_SETTING = 'max-font-size';
 
+    static FONT_SIZES = { 80: "80", 75: "75", 70: "70", 65: "65", 60: "60" };
+    static DEFAULT_FONT_SIZE = 70;
+
     static COLORS = 'colors';
 
     static registerSettings() {
@@ -144,11 +147,11 @@ export class Settings {
       // register the setting to toggle the rainbow or monochrome icon
       game.settings.register(MODULENAME, this.MAX_FONT_SIZE_SETTING, {
         name: `${MODULENAME}.settings.${this.MAX_FONT_SIZE_SETTING}.Name`,
-        default: "70",
+        default: this.DEFAULT_FONT_SIZE,
         type: String,
         scope: 'world',
         config: true,
-        choices: [ {value: "80"}, {value: "75"},{ value: "70"},{ value: "65"},{ value: "60"} ],
+        choices: this.FONT_SIZES,
         hint: `${MODULENAME}.settings.${this.MAX_FONT_SIZE_SETTING}.Hint`,
       });
 

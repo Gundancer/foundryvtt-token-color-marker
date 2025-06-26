@@ -170,6 +170,12 @@ export class IconManager {
 
         let fontSize = game.settings.get(MODULENAME, Settings.MAX_FONT_SIZE_SETTING);
         
+        if(!Object.keys(Settings.FONT_SIZES).includes(fontSize))
+        {
+            // If the font is not in range of options, use the default size.
+            fontSize = Settings.DEFAULT_FONT_SIZE;
+        }
+
         do {
             context.font = `bold ${fontSize}px ${fontName}`;
             fontSize--;
