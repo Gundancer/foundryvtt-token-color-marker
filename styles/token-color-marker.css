@@ -54,6 +54,7 @@
 .token-color-marker > img {
     margin: 0px !important;
     opacity: 1 !important;
+    filter: none;
 }
 
 .token-color-marker-icon {
