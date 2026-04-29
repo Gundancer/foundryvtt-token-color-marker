@@ -1,6 +1,8 @@
 import { MODULENAME } from "./TokenColorMarker.mjs";
 import { Settings } from "./Settings.mjs";
 
+const { FilePicker } = foundry.applications.apps;
+
 const WIDTH = 100;
 const HEIGHT = 100;
 

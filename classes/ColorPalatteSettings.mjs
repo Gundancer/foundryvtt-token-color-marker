@@ -2,26 +2,39 @@ import { IconManager } from "./IconManager.mjs";
 import { Settings } from "./Settings.mjs";
 import { MODULENAME } from "./TokenColorMarker.mjs";
 
+const { ApplicationV2, HandlebarsApplicationMixin, DialogV2 } = foundry.applications.api
+
 // the form to customize the color markers in module settings
-export class ColorPalatteSettings extends FormApplication {
-    static get defaultOptions() {
-      const defaults = super.defaultOptions;
-  
-      const overrides = {
+export class ColorPalatteSettings extends HandlebarsApplicationMixin(ApplicationV2) {
+    static DEFAULT_OPTIONS = {
+      id: "color-palatte-settings",
+      tag: "form",
+      classes: ["standard-form"],
+
+      form: {
         closeOnSubmit: false,
-        height: 'auto',
-        id: 'color-palatte-settings',
-        submitOnChange: true,
-        template: `modules/${MODULENAME}/templates/color-palatte-settings.hbs`,
-        title: 'Colors',
-        userId: game.userId,
-      };
-  
-      const mergedOptions = foundry.utils.mergeObject(defaults, overrides);
-  
-      return mergedOptions;
+        submitOnChange: true
+      },
+
+      position: {
+        height: "800",
+      },
+
+      window: {
+        title: "Colors",
+        resizable: true,
+      },
+
+      userId: game.userId
+    };
+
+    static PARTS = {
+      form: {
+        template: `modules/token-color-marker/templates/color-palatte-settings.hbs`,
+        scrollable: [".scroll-region", ""]
+      },
     }
-  
+
     // get the color list in the settings
     static getColors() {
       return game.settings.get(MODULENAME, Settings.COLORS);
@@ -87,8 +100,10 @@ export class ColorPalatteSettings extends FormApplication {
       // get the list of colors
       let colors = this.getColors();
 
-      // change the order
-      colors.splice(to, 0, colors.splice(from, 1)[0]);
+      if(to >= 0){ // prevent first one from looping to bottom
+        // change the order
+        colors.splice(to, 0, colors.splice(from, 1)[0]);
+      }
 
       // update the database with the updated Color list
       await game.settings.set(MODULENAME, Settings.COLORS, colors);
@@ -105,22 +120,27 @@ export class ColorPalatteSettings extends FormApplication {
       switch (action) {
         case 'create': {
           await ColorPalatteSettings.createColor();
-          this.render();
+          this.render({isScrollDown: true});
           break;
         }
   
         case 'add-image': {
           await ColorPalatteSettings.addImage();
-          this.render();
+          this.render({isScrollDown: true});
           break;
         }
 
         case 'delete': {
-            const confirmed = await Dialog.confirm({
-              title: game.i18n.localize(`${MODULENAME}.confirms.deleteConfirm.Title`),
-              content: game.i18n.localize(`${MODULENAME}.confirms.deleteConfirm.Content`)
+            const confirmed = await DialogV2.confirm({
+              window: {
+                title: game.i18n.localize(`${MODULENAME}.confirms.deleteConfirm.Title`)
+              },
+              content: game.i18n.localize(`${MODULENAME}.confirms.deleteConfirm.Content`),
+              yes: { 
+                default: true 
+              }
             });
-    
+
             if (confirmed) {
               await ColorPalatteSettings.deleteColor(colorId);
               this.render();
@@ -141,19 +161,44 @@ export class ColorPalatteSettings extends FormApplication {
           break;
         }
   
+        case 'close': {
+          // This showed up when updating to ApplicationV2
+          break;
+        }
+
         default:
           console.log(false, 'Invalid action detected', action);
       }
     }
   
-    activateListeners(html) {
-      super.activateListeners(html);
-  
-      html.on('click', "[data-action]", this._handleButtonClick.bind(this));
+    _onRender(context, options) {
+      super._onRender(context, options);
+
+      if(options.isScrollDown) {
+        const scrollRegion = this.element.querySelector(".scroll-region");
+        scrollRegion.scrollTop = scrollRegion.scrollHeight;
+      }
+
+      this.element.querySelectorAll("[data-action]")
+        .forEach(da => {
+          da.addEventListener("click", event => this._handleButtonClick(event));
+        });
+
+      this.element.querySelectorAll("input")
+        .forEach(input => {
+          input.addEventListener("change", this._onChangeInput.bind(this));
+        });
+
+      this.element.querySelectorAll("file-picker")
+        .forEach(fp => {
+          fp.addEventListener("change", this._onChangeInput.bind(this));
+        });
     }
   
     // gets the color list to display on the form
-    getData() {
+    async _prepareContext(options) {
+      const context = await super._prepareContext(options)
+
       const colors = ColorPalatteSettings.getColors();
 
       // make a deep copy to avoid adding filepath to colors in settings
@@ -169,7 +214,7 @@ export class ColorPalatteSettings extends FormApplication {
         colors: displayIcons
       }
     }
-  
+
     // handles the update action
     async _onChangeInput(event) {
   

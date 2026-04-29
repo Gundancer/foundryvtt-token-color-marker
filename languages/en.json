@@ -36,7 +36,7 @@
             },
             "enable-icon-in-chat-message": {
                 "Name": "Show Color Markers In Chat Message",
-                "Hint": "Shows the token color markers by the tarket's name in the chat message."
+                "Hint": "Shows the token color markers by the target's name in the chat message."
             },
             "max-font-size": {
                 "Name": "Max Pixel Size Of Marker Text",

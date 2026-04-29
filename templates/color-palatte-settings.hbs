@@ -1,51 +1,55 @@
-<form>
-  <ul class="token-color-marker-palatte-settings flexcol">
-    {{#if colors}}
-    <li class="flexrow header">
-      <div class="order-col">_</div>
-      <div class="name-col">{{localize "token-color-marker.color-manager-menu.name-header"}}</div>
-      <div class="hex-col">{{localize "token-color-marker.color-manager-menu.color-picker-header"}}</div>
-      <div class="hex-col">{{localize "token-color-marker.color-manager-menu.hex-header"}}</div>
-      <div class="text-col">{{localize "token-color-marker.color-manager-menu.text-header"}}</div>
-      <div class="hex-col">{{localize "token-color-marker.color-manager-menu.text-color-header"}}</div>
-      <div class="hex-col">{{localize "token-color-marker.color-manager-menu.hex-header"}}</div>
-      <div class="preview-col">Preview</div>
-      <div class="delete-col">_</div>
-    </li>
-    {{/if}}
-    {{#each colors}}
-    <li class="flexrow" data-color-id="{{id}}" data-index="{{@index}}">
-      <div class="flex0 order-col-button-group">
-        <button type="button" title="{{localize "token-color-marker.color-manager-menu.move-up"}}" data-action="move-up" class="flex0 token-color-marker-color-icon-button" >
-          <i class="fas fa-caret-up"></i>
-        </button>
-        <button type="button" title="{{localize "token-color-marker.color-manager-menu.move-down"}}" data-action="move-down" class="flex0 token-color-marker-color-icon-button order-col-down">
-          <i class="fas fa-caret-down"></i>
-        </button> 
-      </div>
-      <input type="text" name="{{id}}.label" value="{{label}}" class="name-col"/>
-      {{#if isCustom}}
-          <file-picker type="image" name="{{id}}.filePath" value="{{filePath}}" class="custom-file-picker"></file-picker>
-      {{else}}
-        <input type="color" name="{{id}}.hex" value="{{hex}}" class="hex-col"/>
-        <input type="text" name="{{id}}.hex" value="{{hex}}" class="hex-col"/>
-        <input type="text" name="{{id}}.text" value="{{text}}" class="text-col" maxlength="3"/>
-        <input type="color" name="{{id}}.textColor" value="{{textColor}}" class="hex-col" />
-        <input type="text" name="{{id}}.textColor" value="{{textColor}}" class="hex-col"/>
+<form class="color-palatte-settings">
+  <div class="scroll-region">
+    <ul class="token-color-marker-palatte-settings flexcol">
+      {{#if colors}}
+      <li class="flexrow header">
+        <div class="order-col">_</div>
+        <div class="name-col">{{localize "token-color-marker.color-manager-menu.name-header"}}</div>
+        <div class="hex-col">{{localize "token-color-marker.color-manager-menu.color-picker-header"}}</div>
+        <div class="hex-col">{{localize "token-color-marker.color-manager-menu.hex-header"}}</div>
+        <div class="text-col">{{localize "token-color-marker.color-manager-menu.text-header"}}</div>
+        <div class="hex-col">{{localize "token-color-marker.color-manager-menu.text-color-header"}}</div>
+        <div class="hex-col">{{localize "token-color-marker.color-manager-menu.hex-header"}}</div>
+        <div class="preview-col">Preview</div>
+        <div class="delete-col">_</div>
+      </li>
       {{/if}}
-      <div class="flex0 preview-col">
-        {{#if filePath}}
-        <img name="{{id}}.preview" src="{{filePath}}" class="flex0">
+      {{#each colors}}
+      <li class="flexrow" data-color-id="{{id}}" data-index="{{@index}}">
+        <div class="flex0 order-col-button-group">
+          <button type="button" title="{{localize "token-color-marker.color-manager-menu.move-up"}}" data-action="move-up" class="flex0 token-color-marker-color-icon-button order-col-button" >
+            <i class="fas fa-caret-up"></i>
+          </button>
+          <button type="button" title="{{localize "token-color-marker.color-manager-menu.move-down"}}" data-action="move-down" class="flex0 token-color-marker-color-icon-button order-col-button">
+            <i class="fas fa-caret-down"></i>
+          </button> 
+        </div>
+        <input type="text" name="{{id}}.label" value="{{label}}" class="name-col"/>
+        {{#if isCustom}}
+            <file-picker type="image" name="{{id}}.filePath" value="{{filePath}}" class="custom-file-picker"></file-picker>
+        {{else}}
+          <input type="color" name="{{id}}.hex" value="{{hex}}" class="hex-col"/>
+          <input type="text" name="{{id}}.hex" value="{{hex}}" class="hex-col"/>
+          <input type="text" name="{{id}}.text" value="{{text}}" class="text-col" maxlength="3"/>
+          <input type="color" name="{{id}}.textColor" value="{{textColor}}" class="hex-col" />
+          <input type="text" name="{{id}}.textColor" value="{{textColor}}" class="hex-col"/>
         {{/if}}
-      </div>
-      <button type="button" title="{{localize "token-color-marker.color-manager-menu.delete-color"}}" data-action="delete" class="flex0 token-color-marker-color-icon-button">
-        <i class="fas fa-trash"></i>
-      </button>
-    </li>
-    {{/each}}
-  </ul>
-
-  <div class="flexrow">
+        <div class="flex0 preview-col">
+          {{#if filePath}}
+          {{!-- this textbox is just to give the preview image a background that changes with color theme --}}
+          <input type="text" name="{{id}}.previewBack" tabindex="-1" class="preview-background" />
+          <img name="{{id}}.preview" src="{{filePath}}" class="flex0">
+          {{/if}}
+        </div>
+        <button type="button" title="{{localize "token-color-marker.color-manager-menu.delete-color"}}" data-action="delete" class="flex0 token-color-marker-color-icon-button">
+          <i class="fas fa-trash"></i>
+        </button>
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+  
+  <div class="flexrow bottom-buttons">
     <button type="button" data-action="create"><i class="fas fa-plus"></i> {{localize "token-color-marker.color-manager-menu.add-color"}}</button>
     <button type="button" data-action="add-image"><i class="fas fa-plus"></i> {{localize "token-color-marker.color-manager-menu.add-image"}}</button>
   </div>

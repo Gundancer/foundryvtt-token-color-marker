@@ -168,7 +168,7 @@ export class TokenColorMarker {
         colorMarkerButton[0].querySelector(`.${MODULENAME}-palette`).classList.toggle("active");
 
         // Deactivate the effects button and status effects palette
-        tokenHUD.toggleStatusTray(false);
+        tokenHUD.togglePalette("effects", false);
 	}
 
     static async deactivateTokenColorMarkerButton(effectsButton) {
